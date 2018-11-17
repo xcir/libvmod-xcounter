@@ -1,0 +1,26 @@
+#
+# Copyright YOU (c) 1900.
+#
+# (vmodtool requires this format.)
+#
+
+$Module xcounter 3 Xcounter VMOD
+
+DESCRIPTION
+===========
+
+This is the embedded documentation for the xcounter VMOD. It should
+mention what the vmod is intended to do.
+
+It can span multiple lines and is written in RST format.
+You can even have links and lists in here:
+
+* https://github.com/varnish/libvmod-xcounter/
+* https://www.varnish-cache.org/
+
+$Event event_function
+$Object vsc(PRIV_VCL, ENUM {bitmap, bytes, duration, integer} format=integer, ENUM {bitmap, counter, gauge} type=gauge, ENUM {info, debug, diag} level=info, STRING oneliner="dynamic counter")
+$Method VOID .incr(INT)
+$Method VOID .decr(INT)
+$Method VOID .set(INT)
+$Method INT  .get()
