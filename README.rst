@@ -70,11 +70,18 @@ vsc(...)
          ENUM {info, debug, diag} level=info,
          STRING oneliner="xcounter",
          BOOL hidecold=1,
-         BOOL hidevclname=0
+         BOOL hidevclname=0,
+         STRING groupname=""
       )
 
 Description
           Create a counter.
+
+          Counter name format
+          ::
+
+            XCNT.boot.group.object.val
+            ("XCNT.%s.%s%s.val", vclname, groupname, objectname)
 
           ``format`` Counter format.
 
@@ -87,6 +94,8 @@ Description
           ``hidecold`` Hide counter, if state of vcl becomes cold.
 
           ``hidevclname`` Do not include vclname(boot,reload... etc) in counter name, if set to true.
+          
+          ``groupname`` Add group name.
 
 Example
 ::

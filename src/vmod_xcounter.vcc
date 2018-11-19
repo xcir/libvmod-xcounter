@@ -41,10 +41,16 @@ The counter is linked to the VCL.
 Add new entry per new(reload) VCL.
 
 $Event event_function
-$Object vsc(PRIV_VCL, ENUM {bitmap, bytes, duration, integer} format=integer, ENUM {bitmap, counter, gauge} type=counter, ENUM {info, debug, diag} level=info, STRING oneliner="xcounter", BOOL hidecold=1, BOOL hidevclname=0)
+$Object vsc(PRIV_VCL, ENUM {bitmap, bytes, duration, integer} format=integer, ENUM {bitmap, counter, gauge} type=counter, ENUM {info, debug, diag} level=info, STRING oneliner="xcounter", BOOL hidecold=1, BOOL hidevclname=0, STRING groupname="")
 
 Description
 	Create a counter.
+	
+	Counter name format
+	::
+
+		XCNT.boot.group.object.val
+		("XCNT.%s.%s%s.val", vclname, groupname, objectname)
 
 	``format``
 	Counter format.
@@ -63,6 +69,9 @@ Description
 
 	``hidevclname``
 	Do not include vclname(boot,reload... etc) in counter name, if set to true.
+	
+	``groupname``
+	Add group name.
 
 Example
 	new xcnt = xcounter.vsc();
