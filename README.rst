@@ -92,13 +92,11 @@ Example
 ::
           new xcnt = xcounter.vsc();
 
-VOID xvsc.incr(INT)
+VOID xvsc.incr(INT d, BOOL threadsafe=1)
 --------------------
 
 Description
           Increment vlaue.
-
-          This method is atomic.
 
           Negative values are ignored
 
@@ -108,13 +106,11 @@ Example
           xcnt.incr(1);
 
 
-VOID xvsc.decr(INT)
+VOID xvsc.decr(INT d, BOOL threadsafe=1)
 -------------------
 
 Description
           Decrement value.
-
-          This method is atomic.
 
           Negative values are ignored.
 
