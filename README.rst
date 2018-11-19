@@ -66,7 +66,7 @@ vsc(...)
 
       new xvsc = vsc(
          ENUM {bitmap, bytes, duration, integer} format=integer,
-         ENUM {bitmap, counter, gauge} type=gauge,
+         ENUM {bitmap, counter, gauge} type=counter,
          ENUM {info, debug, diag} level=info,
          STRING oneliner="xcounter",
          BOOL hidecold=1,
