@@ -33,6 +33,12 @@ varnishstat output
   $ sudo varnishstat -1 -f "XCNT*"
   XCNT.reload_20181118_042545_24957.example_net.val            1          .   xcounter
 
+ATTENTION
+===========
+
+The counter is linked to the VCL.
+
+Add new entry per new(reload) VCL.
 
 $Event event_function
 $Object vsc(PRIV_VCL, ENUM {bitmap, bytes, duration, integer} format=integer, ENUM {bitmap, counter, gauge} type=gauge, ENUM {info, debug, diag} level=info, STRING oneliner="xcounter", BOOL hidecold=1, BOOL hidevclname=0)
