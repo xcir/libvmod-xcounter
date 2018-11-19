@@ -2,10 +2,27 @@
 vmod-xcounter
 ============
 
+------------------------------------
+Custom Counter
+------------------------------------
+
+:Author: Shohei Tanaka(@xcir)
+:Date: 2018-11-19
+:Version: 61.1
+:Support Varnish Version: 6.0.x 6.1.x
+:Check Varnish Version: 6.0.x 6.1.x
+:Manual section: 3
+
 SYNOPSIS
 ========
 
 import xcounter;
+
+Versioning
+============
+[varnish-version].[library-version]
+
+61.1 is v1 for Varnish6.1.x
 
 DESCRIPTION
 ===========
