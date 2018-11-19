@@ -183,7 +183,7 @@ event_function(VRT_CTX, struct vmod_priv *priv, enum vcl_event_e e)
 
 VCL_VOID v_matchproto_()
 vmod_vsc__init(VRT_CTX, struct vmod_xcounter_vsc **xcntvscp,
-    const char *vcl_name, struct vmod_priv *priv, VCL_ENUM format, VCL_ENUM type, VCL_ENUM level, VCL_STRING oneliner)
+    const char *vcl_name, struct vmod_priv *priv, VCL_ENUM format, VCL_ENUM type, VCL_ENUM level, VCL_STRING oneliner, VCL_BOOL hide)
 {
 	
 
@@ -204,7 +204,7 @@ vmod_vsc__init(VRT_CTX, struct vmod_xcounter_vsc **xcntvscp,
 	CAST_OBJ_NOTNULL(dsh, priv->priv, VSC_XCNT_SEG_HEAD_MAGIC);
 	ALLOC_OBJ(ds, VSC_XCNT_SEG_MAGIC);
 	ds->vsc_vsc = xcntvsc;
-	VTAILQ_INSERT_HEAD(&dsh->vsc_segs, ds, list);
+	if(hide) VTAILQ_INSERT_HEAD(&dsh->vsc_segs, ds, list);
 
 }
 

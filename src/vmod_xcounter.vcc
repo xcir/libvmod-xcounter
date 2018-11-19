@@ -1,7 +1,6 @@
 #
-# Copyright YOU (c) 1900.
-#
-# (vmodtool requires this format.)
+# Copyright Shohei Tanaka(@xcir)  (c) 2018.
+# https://github.com/xcir/libvmod-xcounter/
 #
 
 $Module xcounter 3 Xcounter VMOD
@@ -9,18 +8,52 @@ $Module xcounter 3 Xcounter VMOD
 DESCRIPTION
 ===========
 
-This is the embedded documentation for the xcounter VMOD. It should
-mention what the vmod is intended to do.
+vmod_xcounter enables custom counter in Varnish.
 
-It can span multiple lines and is written in RST format.
-You can even have links and lists in here:
+For example, count to the number of requests per domain.
 
-* https://github.com/varnish/libvmod-xcounter/
-* https://www.varnish-cache.org/
+vcl sample:
+::
+
+  import xcounter;
+
+  sub vcl_init {
+    new example_net = xcounter.vsc();
+  }
+
+  sub vcl_recv {
+    if(req.http.host ~ "^example\.net$"){
+      example_net.incr(1);
+    }
+  }
+
+varnishstat output
+::
+
+  $ sudo varnishstat -1 -f "XCNT*"
+  XCNT.reload_20181118_042545_24957.example_net.val            1          .   xcounter
+
 
 $Event event_function
-$Object vsc(PRIV_VCL, ENUM {bitmap, bytes, duration, integer} format=integer, ENUM {bitmap, counter, gauge} type=gauge, ENUM {info, debug, diag} level=info, STRING oneliner="xcounter")
+$Object vsc(PRIV_VCL, ENUM {bitmap, bytes, duration, integer} format=integer, ENUM {bitmap, counter, gauge} type=gauge, ENUM {info, debug, diag} level=info, STRING oneliner="xcounter", BOOL hide=1)
 $Method VOID .incr(INT)
+
+Increment vlaue.
+
+This method is atomic.
+
+Negative values are ignored
+
 $Method VOID .decr(INT)
+
+Decrement value.
+
+Negative values are ignored.
+
 $Method VOID .set(INT)
+
+Set value.
+
 $Method INT  .get()
+
+Get current value.
