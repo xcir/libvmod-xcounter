@@ -1,4 +1,4 @@
-libvmod-xcounter 0.1 (2018-11-19)
+libvmod-xcounter 61.1 (2018-11-19)
 --------------------------------
 
 * Initial
