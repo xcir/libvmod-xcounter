@@ -10,28 +10,124 @@ import xcounter;
 DESCRIPTION
 ===========
 
-Xcounter Varnish vmod demonstrating how to write an out-of-tree Varnish vmod.
 
-Implements the traditional Hello World as a vmod.
+vmod_xcounter enables custom counter in Varnish.
 
-FUNCTIONS
+For example, count to the number of requests per domain.
+
+vcl sample:
+::
+
+  import xcounter;
+
+  sub vcl_init {
+    new example_net = xcounter.vsc();
+  }
+
+  sub vcl_recv {
+    if(req.http.host ~ "^example\.net$"){
+      example_net.incr(1);
+    }
+  }
+
+varnishstat output
+::
+
+  $ sudo varnishstat -1 -f "XCNT*"
+  XCNT.reload_20181118_042545_24957.example_net.val            1          .   xcounter
+
+ATTENTION
 =========
 
-hello
------
+The counter is linked to the VCL.
 
-Prototype
-        ::
+Add new entry per new(reload) VCL.
 
-                hello(STRING S)
-Return value
-	STRING
+vsc(...)
+---------
+::
+
+      new xvsc = vsc(
+         ENUM {bitmap, bytes, duration, integer} format=integer,
+         ENUM {bitmap, counter, gauge} type=gauge,
+         ENUM {info, debug, diag} level=info,
+         STRING oneliner="xcounter",
+         BOOL hidecold=1,
+         BOOL hidevclname=0
+      )
+
 Description
-	Returns "Hello, " prepended to S
-Xcounter
-        ::
+          Create a counter.
 
-                set resp.http.hello = xcounter.hello("World");
+          ``format`` Counter format.
+
+          ``type`` Counter type.
+
+          ``level`` Counter level.
+
+          ``oneliner`` Counter description.
+
+          ``hidecold`` Hide counter, if state of vcl becomes cold.
+
+          ``hidevclname`` Do not include vclname(boot,reload... etc) in counter name, if set to true.
+
+Example
+::
+          new xcnt = xcounter.vsc();
+
+VOID xvsc.incr(INT)
+--------------------
+
+Description
+          Increment vlaue.
+
+          This method is atomic.
+
+          Negative values are ignored
+
+Example
+::
+
+          xcnt.incr(1);
+
+
+VOID xvsc.decr(INT)
+-------------------
+
+Description
+          Decrement value.
+
+          This method is atomic.
+
+          Negative values are ignored.
+
+Example
+::
+
+          xcnt.decr(1);
+
+VOID xvsc.set(INT)
+---------------------
+
+Description
+      Set value.
+
+Example
+::
+
+      xcnt.set(1024);
+
+INT xvsc.get()
+--------------------
+
+Description
+      Get current value.
+
+Example
+::
+
+      if(xcnt.get() > 1024){...}
+
 
 INSTALLATION
 ============
@@ -82,17 +178,6 @@ By default, the vmod ``configure`` script installs the built vmod in the
 directory relevant to the prefix. The vmod installation directory can be
 overridden by passing the ``vmoddir`` variable to ``make install``.
 
-USAGE
-=====
-
-In your VCL you could then use this vmod along the following lines::
-
-        import xcounter;
-
-        sub vcl_deliver {
-                # This sets resp.http.hello to "Hello, World"
-                set resp.http.hello = xcounter.hello("World");
-        }
 
 COMMON PROBLEMS
 ===============
@@ -108,14 +193,6 @@ COMMON PROBLEMS
   For instance, to build against Varnish Cache 4.1, this vmod must be built from
   branch 4.1.
 
-START YOUR OWN VMOD
-===================
+* Require GCC
 
-The basic steps to start a new vmod from this xcounter are::
-
-  name=myvmod
-  git clone libvmod-xcounter libvmod-$name
-  cd libvmod-$name
-  ./rename-vmod-script $name
-
-and follow the instructions output by rename-vmod-script
+  This vmod using GCC Atomic builtins.
