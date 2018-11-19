@@ -183,7 +183,7 @@ event_function(VRT_CTX, struct vmod_priv *priv, enum vcl_event_e e)
 
 VCL_VOID v_matchproto_()
 vmod_vsc__init(VRT_CTX, struct vmod_xcounter_vsc **xcntvscp,
-    const char *vcl_name, struct vmod_priv *priv, VCL_ENUM format, VCL_ENUM type, VCL_ENUM level, VCL_STRING oneliner, VCL_BOOL hide)
+    const char *vcl_name, struct vmod_priv *priv, VCL_ENUM format, VCL_ENUM type, VCL_ENUM level, VCL_STRING oneliner, VCL_BOOL hidecold, VCL_BOOL hidevclname)
 {
 	
 
@@ -196,15 +196,18 @@ vmod_vsc__init(VRT_CTX, struct vmod_xcounter_vsc **xcntvscp,
 
 	
 	*xcntvscp = xcntvsc;
-	
-	VSC_xcnt_New(xcntvsc, format, type, level, oneliner, "%s.%s", VCL_Name(ctx->vcl), vcl_name);
+	if(hidevclname){
+		VSC_xcnt_New(xcntvsc, format, type, level, oneliner, "%s", vcl_name);
+	}else{
+		VSC_xcnt_New(xcntvsc, format, type, level, oneliner, "%s.%s", VCL_Name(ctx->vcl), vcl_name);
+	}
 
 	struct vsc_xcnt_seg_head *dsh;
 	struct vsc_xcnt_seg  *ds;
 	CAST_OBJ_NOTNULL(dsh, priv->priv, VSC_XCNT_SEG_HEAD_MAGIC);
 	ALLOC_OBJ(ds, VSC_XCNT_SEG_MAGIC);
 	ds->vsc_vsc = xcntvsc;
-	if(hide) VTAILQ_INSERT_HEAD(&dsh->vsc_segs, ds, list);
+	if(hidecold) VTAILQ_INSERT_HEAD(&dsh->vsc_segs, ds, list);
 
 }
 

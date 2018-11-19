@@ -35,7 +35,7 @@ varnishstat output
 
 
 $Event event_function
-$Object vsc(PRIV_VCL, ENUM {bitmap, bytes, duration, integer} format=integer, ENUM {bitmap, counter, gauge} type=gauge, ENUM {info, debug, diag} level=info, STRING oneliner="xcounter", BOOL hide=1)
+$Object vsc(PRIV_VCL, ENUM {bitmap, bytes, duration, integer} format=integer, ENUM {bitmap, counter, gauge} type=gauge, ENUM {info, debug, diag} level=info, STRING oneliner="xcounter", BOOL hidecold=1, BOOL hidevclname=0)
 $Method VOID .incr(INT)
 
 Increment vlaue.
