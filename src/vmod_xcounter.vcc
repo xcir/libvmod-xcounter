@@ -67,24 +67,20 @@ Description
 Example
 	new xcnt = xcounter.vsc();
 
-$Method VOID .incr(INT)
+$Method VOID .incr(INT d, BOOL threadsafe=1)
 
 Description
 	Increment vlaue.
-
-	This method is atomic.
 
 	Negative values are ignored
 
 Example
 	xcnt.incr(1);
 
-$Method VOID .decr(INT)
+$Method VOID .decr(INT d, BOOL threadsafe=1)
 
 Description
 	Decrement value.
-
-	This method is atomic.
 
 	Negative values are ignored.
 

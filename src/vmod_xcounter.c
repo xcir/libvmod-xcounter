@@ -227,17 +227,25 @@ vmod_vsc__fini(struct vmod_xcounter_vsc **xcntvscp)
 
 
 VCL_VOID v_matchproto_()
-vmod_vsc_incr(VRT_CTX, struct vmod_xcounter_vsc *xcntvsc, VCL_INT d)
+vmod_vsc_incr(VRT_CTX, struct vmod_xcounter_vsc *xcntvsc, VCL_INT d, VCL_BOOL threadsafe)
 {
 	if(d < 0) return;
-	__sync_fetch_and_add(&xcntvsc->vsc->val, d);
+	if(threadsafe){
+		__sync_fetch_and_add(&xcntvsc->vsc->val, d);
+	}else{
+		xcntvsc->vsc->val += d;
+	}
 }
 
 VCL_VOID v_matchproto_()
-vmod_vsc_decr(VRT_CTX, struct vmod_xcounter_vsc *xcntvsc, VCL_INT d)
+vmod_vsc_decr(VRT_CTX, struct vmod_xcounter_vsc *xcntvsc, VCL_INT d, VCL_BOOL threadsafe)
 {
 	if(d < 0) return;
-	__sync_fetch_and_sub(&xcntvsc->vsc->val, d);
+	if(threadsafe){
+		__sync_fetch_and_sub(&xcntvsc->vsc->val, d);
+	}else{
+		xcntvsc->vsc->val -= d;
+	}
 }
 
 VCL_VOID v_matchproto_()
