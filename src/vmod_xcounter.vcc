@@ -36,24 +36,67 @@ varnishstat output
 
 $Event event_function
 $Object vsc(PRIV_VCL, ENUM {bitmap, bytes, duration, integer} format=integer, ENUM {bitmap, counter, gauge} type=gauge, ENUM {info, debug, diag} level=info, STRING oneliner="xcounter", BOOL hidecold=1, BOOL hidevclname=0)
+
+Description
+	Create a counter.
+
+	``format``
+	Counter format.
+
+	``type``
+	Counter type.
+
+	``level``
+	Counter level.
+
+	``oneliner``
+	Counter description.
+
+	``hidecold``
+	Hide counter, if state of vcl becomes cold.
+
+	``hidevclname``
+	Do not include vclname(boot,reload... etc) in counter name, if set to true.
+
+Example
+	new xcnt = xcounter.vsc();
+
 $Method VOID .incr(INT)
 
-Increment vlaue.
+Description
+	Increment vlaue.
 
-This method is atomic.
+	This method is atomic.
 
-Negative values are ignored
+	Negative values are ignored
+
+Example
+	xcnt.incr(1);
 
 $Method VOID .decr(INT)
 
-Decrement value.
+Description
+	Decrement value.
 
-Negative values are ignored.
+	This method is atomic.
+
+	Negative values are ignored.
+
+Example
+	xcnt.decr(1);
 
 $Method VOID .set(INT)
 
-Set value.
+Description
+	Set value.
+
+Example
+	xcnt.set(1024);
 
 $Method INT  .get()
 
-Get current value.
+Description
+	Get current value.
+Example
+	if(xcnt.get() > 1024){...}
+
