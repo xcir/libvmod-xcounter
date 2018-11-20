@@ -38,6 +38,7 @@ struct vsc_xcnt_seg {
 struct vsc_xcnt_seg_head {
 	unsigned magic;
 #define VSC_XCNT_SEG_HEAD_MAGIC 0xaed1c73f
+	double   t_start;
 	VTAILQ_HEAD(, vsc_xcnt_seg) vsc_segs;
 };
 
@@ -154,6 +155,7 @@ event_function(VRT_CTX, struct vmod_priv *priv, enum vcl_event_e e)
 	case VCL_EVENT_LOAD:
 		if (priv->priv == NULL) {
 			ALLOC_OBJ(dsh, VSC_XCNT_SEG_HEAD_MAGIC);
+			dsh->t_start = VTIM_real();
 			priv->priv = dsh;
 			priv->free = free_func;
 		}
@@ -258,4 +260,12 @@ VCL_INT v_matchproto_()
 vmod_vsc_get(VRT_CTX, struct vmod_xcounter_vsc *xcntvsc)
 {
 	return(xcntvsc->vsc->val);
+}
+
+VCL_DURATION v_matchproto_()
+vmod_vsc_elapsed(VRT_CTX, struct vmod_xcounter_vsc *xcntvsc, struct vmod_priv *priv)
+{
+	struct vsc_xcnt_seg_head *dsh;
+	CAST_OBJ_NOTNULL(dsh, priv->priv, VSC_XCNT_SEG_HEAD_MAGIC);
+	return(VTIM_real() - dsh->t_start);
 }

@@ -111,3 +111,11 @@ Description
 Example
 	if(xcnt.get() > 1024){...}
 
+
+$Method DURATION  .elapsed(PRIV_VCL)
+
+Description
+	Get elapsed time.
+Example
+	if(xcnt.elapsed() > 1s){...}
+

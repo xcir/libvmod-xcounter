@@ -150,6 +150,17 @@ Example
 
       if(xcnt.get() > 1024){...}
 
+INT xvsc.elapsed()
+--------------------
+
+Description
+      Get elapsed time.
+
+Example
+::
+
+      if(xcnt.elapsed() > 1s){...}
+
 
 INSTALLATION
 ============
