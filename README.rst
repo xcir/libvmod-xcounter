@@ -7,7 +7,7 @@ Custom Counter
 ------------------------------------
 
 :Author: Shohei Tanaka(@xcir)
-:Date: 2018-11-19
+:Date: 2018-11-20
 :Version: 61.1
 :Support Varnish Version: 6.0.x 6.1.x
 :Check Varnish Version: 6.0.x 6.1.x
