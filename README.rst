@@ -60,6 +60,17 @@ The counter is linked to the VCL.
 
 Add new entry per new(reload) VCL.
 
+INT elapsed()
+--------------------
+
+Description
+      Get elapsed time.
+
+Example
+::
+
+      if(xcounter.elapsed() > 1s){...}
+
 vsc(...)
 ---------
 ::
@@ -149,17 +160,6 @@ Example
 ::
 
       if(xcnt.get() > 1024){...}
-
-INT xcounter.elapsed()
---------------------
-
-Description
-      Get elapsed time.
-
-Example
-::
-
-      if(xcounter.elapsed() > 1s){...}
 
 
 INSTALLATION
