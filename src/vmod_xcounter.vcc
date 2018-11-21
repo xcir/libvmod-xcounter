@@ -112,7 +112,7 @@ Example
 	if(xcnt.get() > 1024){...}
 
 
-$Method DURATION  .elapsed(PRIV_VCL)
+$Function DURATION  elapsed(PRIV_VCL)
 
 Description
 	Get elapsed time.

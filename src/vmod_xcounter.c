@@ -263,7 +263,7 @@ vmod_vsc_get(VRT_CTX, struct vmod_xcounter_vsc *xcntvsc)
 }
 
 VCL_DURATION v_matchproto_()
-vmod_vsc_elapsed(VRT_CTX, struct vmod_xcounter_vsc *xcntvsc, struct vmod_priv *priv)
+vmod_elapsed(VRT_CTX, struct vmod_priv *priv)
 {
 	struct vsc_xcnt_seg_head *dsh;
 	CAST_OBJ_NOTNULL(dsh, priv->priv, VSC_XCNT_SEG_HEAD_MAGIC);

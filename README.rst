@@ -150,7 +150,7 @@ Example
 
       if(xcnt.get() > 1024){...}
 
-INT xvsc.elapsed()
+INT xcounter.elapsed()
 --------------------
 
 Description
@@ -159,7 +159,7 @@ Description
 Example
 ::
 
-      if(xcnt.elapsed() > 1s){...}
+      if(xcounter.elapsed() > 1s){...}
 
 
 INSTALLATION
