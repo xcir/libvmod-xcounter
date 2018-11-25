@@ -30,6 +30,11 @@ DESCRIPTION
 
 vmod_xcounter enables custom counter in Varnish.
 
+``varnishstat -f XCNT.*``
+
+.. image:: ./res/varnishstat.png
+
+
 For example, count to the number of requests per domain.
 
 vcl sample:
@@ -50,7 +55,7 @@ vcl sample:
 varnishstat output
 ::
 
-  $ sudo varnishstat -1 -f "XCNT*"
+  $ sudo varnishstat -1 -f "XCNT.*"
   XCNT.reload_20181118_042545_24957.example_net.val            1          .   xcounter
 
 ATTENTION
