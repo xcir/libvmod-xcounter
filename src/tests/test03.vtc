@@ -1,0 +1,90 @@
+varnishtest "Test xcounter vmod"
+
+barrier b1 cond 9
+
+server s1 -repeat 9 {
+       rxreq
+       txresp
+} -start
+
+varnish v1 -vcl+backend {
+	import ${vmod_xcounter};
+
+	sub vcl_init {
+		new xc = xcounter.vsc();
+	}
+
+	sub vcl_recv {
+		xc.incr(1);
+	}
+
+} -start
+
+client c1 {
+	barrier b1 sync
+	txreq
+	rxresp
+} -start
+
+client c2 {
+barrier b1 sync
+txreq
+rxresp
+} -start
+
+client c3 {
+barrier b1 sync
+txreq
+rxresp
+} -start
+
+client c4 {
+barrier b1 sync
+txreq
+rxresp
+} -start
+
+client c5 {
+barrier b1 sync
+txreq
+rxresp
+} -start
+
+client c6 {
+barrier b1 sync
+txreq
+rxresp
+} -start
+
+client c7 {
+barrier b1 sync
+txreq
+rxresp
+} -start
+
+client c8 {
+barrier b1 sync
+txreq
+rxresp
+} -start
+
+client c9 {
+barrier b1 sync
+txreq
+rxresp
+} -start
+
+
+client c1 -wait
+client c2 -wait
+client c3 -wait
+client c4 -wait
+client c5 -wait
+client c6 -wait
+client c7 -wait
+client c8 -wait
+client c9 -wait
+
+varnish v1 -expect XCNT.vcl1.xc.val == 9
+
+

@@ -6,29 +6,24 @@ server s1 {
 } -start
 
 varnish v1 -vcl+backend {
-	import std;
 	import ${vmod_xcounter};
 
 	sub vcl_init {
-		new example_net_200 = xcounter.vsc(
-			format   = duration,
-			type     = counter,
-			level    = info,
-			oneliner = "hello"
-			
-			);
-		new example_net_400 = xcounter.vsc();
+		new xc = xcounter.vsc();
+		new xc2 = xcounter.vsc(hidevclname=1, groupname="foo.", oneliner="hello");
+		new x1 = xcounter.vsc(format=bitmap, type=bitmap, level=debug);
+		new x2 = xcounter.vsc(format=bytes,  type=gauge , level=diag);
+		new x3 = xcounter.vsc(format=duration);
+
+
 	}
 
 	sub vcl_deliver {
-		example_net_200.set(1);
-		example_net_400.set(100);
-		example_net_400.incr(1);
-		example_net_400.incr(2);
-		example_net_400.incr(3);
-		example_net_400.decr(1);
-		set resp.http.e400 = example_net_400.get();
-		set resp.http.e200 = example_net_200.get();
+		xc.set(10);
+		xc.incr(1);//11
+		xc.decr(2);//9
+		set resp.http.xc = xc.get();
+		set resp.http.el = xcounter.elapsed();
 	}
 
 } -start
@@ -36,11 +31,17 @@ varnish v1 -vcl+backend {
 client c1 {
 	txreq -url "/"
 	rxresp
-	expect resp.http.e400  ==  "105"
-	expect resp.http.e200  ==  "1"
+	expect resp.http.xc  ==  "9"
+	expect resp.http.el  != <undef>
 }
 
 client c1 -run
-varnish v1 -expect XCNT.vcl1.example_net_200.val == 1
-varnish v1 -expect XCNT.vcl1.example_net_400.val == 105
-#shell "varnishstat -1 -n ${v1_name} > /tmp/foo"
+varnish v1 -expect XCNT.vcl1.xc.val == 9
+varnish v1 -expect XCNT.foo.xc2.val == 0
+varnish v1 -expect XCNT.vcl1.x1.val == 0
+varnish v1 -expect XCNT.vcl1.x2.val == 0
+varnish v1 -expect XCNT.vcl1.x3.val == 0
+
+shell "varnishstat -1 -n ${v1_name}|grep XCNT.foo.xc2|grep hello"
+
+#shell "varnishstat -1 -n ${v1_name} > /tmp/test-xcounter"

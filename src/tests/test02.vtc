@@ -1,0 +1,55 @@
+varnishtest "Test xcounter vmod"
+
+server s1 -repeat 2 {
+       rxreq
+       txresp
+} -start
+
+varnish v1 -arg "-p vcl_cooldown=1" -vcl+backend {
+	import ${vmod_xcounter};
+
+	sub vcl_init {
+		new xc = xcounter.vsc();
+	}
+
+	sub vcl_deliver {
+		xc.set(10);
+	}
+
+} -start
+
+varnish v1 -vcl+backend {
+	import ${vmod_xcounter};
+
+	sub vcl_init {
+		new xc = xcounter.vsc();
+	}
+	sub vcl_deliver {
+		xc.set(10);
+	}
+}
+
+delay .4
+varnish v1 -cliok "vcl.state vcl1 cold"
+delay 1.4
+
+client c1 {
+	txreq -url "/"
+	rxresp
+} -run
+
+shell -err "varnishstat -1 -n ${v1_name}|grep XCNT.vcl1.xc.val"
+shell      "varnishstat -1 -n ${v1_name}|grep XCNT.vcl2.xc.val"
+
+varnish v1 -expect XCNT.vcl2.xc.val == 10
+
+
+varnish v1 -cliok "vcl.use vcl1"
+delay .4
+
+shell      "varnishstat -1 -n ${v1_name}|grep XCNT.vcl1.xc.val"
+shell      "varnishstat -1 -n ${v1_name}|grep XCNT.vcl2.xc.val"
+varnish v1 -expect XCNT.vcl1.xc.val == 0
+varnish v1 -expect XCNT.vcl2.xc.val == 10
+
+
