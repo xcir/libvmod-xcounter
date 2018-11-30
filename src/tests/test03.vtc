@@ -1,4 +1,4 @@
-varnishtest "Test xcounter vmod"
+varnishtest "Test xcounter vmod(rush)"
 
 barrier b1 cond 9
 
@@ -27,51 +27,51 @@ client c1 {
 } -start
 
 client c2 {
-barrier b1 sync
-txreq
-rxresp
+	barrier b1 sync
+	txreq
+	rxresp
 } -start
 
 client c3 {
-barrier b1 sync
-txreq
-rxresp
+	barrier b1 sync
+	txreq
+	rxresp
 } -start
 
 client c4 {
-barrier b1 sync
-txreq
-rxresp
+	barrier b1 sync
+	txreq
+	rxresp
 } -start
 
 client c5 {
-barrier b1 sync
-txreq
-rxresp
+	barrier b1 sync
+	txreq
+	rxresp
 } -start
 
 client c6 {
-barrier b1 sync
-txreq
-rxresp
+	barrier b1 sync
+	txreq
+	rxresp
 } -start
 
 client c7 {
-barrier b1 sync
-txreq
-rxresp
+	barrier b1 sync
+	txreq
+	rxresp
 } -start
 
 client c8 {
-barrier b1 sync
-txreq
-rxresp
+	barrier b1 sync
+	txreq
+	rxresp
 } -start
 
 client c9 {
-barrier b1 sync
-txreq
-rxresp
+	barrier b1 sync
+	txreq
+	rxresp
 } -start
 
 
@@ -86,5 +86,4 @@ client c8 -wait
 client c9 -wait
 
 varnish v1 -expect XCNT.vcl1.xc.val == 9
-
 

@@ -1,4 +1,4 @@
-varnishtest "Test xcounter vmod"
+varnishtest "Test xcounter vmod(hide/reveal)"
 
 server s1 -repeat 2 {
        rxreq
