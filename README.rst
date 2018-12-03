@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/xcir/libvmod-xcounter.svg?branch=master
+    :target: https://travis-ci.org/xcir/libvmod-xcounter
+
 ============
 vmod-xcounter
 ============
