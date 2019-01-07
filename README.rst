@@ -50,7 +50,7 @@ vcl sample:
   }
 
   sub vcl_recv {
-    if(req.http.host ~ "^example\.net$"){
+    if(req.http.host == "example.net"){
       example_net.incr(1);
     }
   }
