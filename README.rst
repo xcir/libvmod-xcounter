@@ -178,7 +178,7 @@ Binaries for Varnish 6.0 LTS (CentOS / RedHat 7)
 
 ::
 
-    yum -y install https://extras.getpagespeed.com/release-el7-latest.rpm
+    yum -y install https://extras.getpagespeed.com/release-el7-latest.rpm yum-utils
     yum-config-manager --enable getpagespeed-extras-varnish60
     yum install vmod-xcounter
 
