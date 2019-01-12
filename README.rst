@@ -176,6 +176,8 @@ INSTALLATION
 Binaries for Varnish 6.0 LTS (CentOS / RedHat 7)
 -------------------------------------------------
 
+Provided by GetPageSpeed
+
 ::
 
     yum -y install https://extras.getpagespeed.com/release-el7-latest.rpm yum-utils
