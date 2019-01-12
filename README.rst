@@ -173,6 +173,22 @@ Example
 INSTALLATION
 ============
 
+Binaries for Varnish 6.0 LTS (CentOS / RedHat 7)
+-------------------------------------------------
+
+::
+
+    yum -y install https://extras.getpagespeed.com/release-el7-latest.rpm yum-utils
+    yum-config-manager --enable getpagespeed-extras-varnish60
+    yum install vmod-xcounter
+
+More on the VMODs repository `here <https://www.getpagespeed.com/redhat>`_.
+
+Compilation
+---------------------
+
+For other platforms you would use compilation.
+
 The source tree is based on autotools to configure the building, and
 does also have the necessary bits in place to do functional unit tests
 using the ``varnishtest`` tool.
