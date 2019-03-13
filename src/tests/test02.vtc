@@ -44,6 +44,7 @@ shell      "varnishstat -1 -n ${v1_name}|grep XCNT.vcl2.xc.val"
 varnish v1 -expect XCNT.vcl2.xc.val == 10
 
 
+varnish v1 -cliok "vcl.state vcl1 auto"
 varnish v1 -cliok "vcl.use vcl1"
 delay .4
 
