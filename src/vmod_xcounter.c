@@ -147,7 +147,11 @@ free_func(void *p)
 
 
 int v_matchproto_(vmod_event_f)
-vmod_event_function(VRT_CTX, struct vmod_priv *priv, enum vcl_event_e e)
+#if VRT_MAJOR_VERSION > 8
+  vmod_event_function(VRT_CTX, struct vmod_priv *priv, enum vcl_event_e e)
+#else
+  event_function(VRT_CTX, struct vmod_priv *priv, enum vcl_event_e e)
+#endif
 {
 	struct vsc_xcnt_seg_head *dsh;
 	struct vsc_xcnt_seg  *ds;
