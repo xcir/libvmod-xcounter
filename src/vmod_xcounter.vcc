@@ -4,6 +4,7 @@
 #
 
 $Module xcounter 3 Xcounter VMOD
+$ABI vrt
 
 DESCRIPTION
 ===========
