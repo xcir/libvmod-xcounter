@@ -12,7 +12,7 @@ Custom Counter
 :Author: Shohei Tanaka(@xcir)
 :Date: 2019-03-20
 :Version: 62.3
-:Support Varnish Version: 6.0.x 6.1.x 6.2.x 6.3.x
+:Support Varnish Version: 6.0.x 6.1.x 6.2.x 6.3.x 6.4.x
 :Check Varnish Version: see .travis.yml
 :Manual section: 3
 
