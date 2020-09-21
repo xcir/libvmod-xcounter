@@ -7,8 +7,8 @@ language: c
 addons:
   apt:
     packages:
-    - python-docutils
-    - python-sphinx
+    - python3-docutils
+    - python3-sphinx
 
 before_install:
   - set -e
