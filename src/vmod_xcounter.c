@@ -145,6 +145,13 @@ free_func(void *p)
 	FREE_OBJ(dsh);
 }
 
+#if VRT_MAJOR_VERSION >= 13U
+static const struct vmod_priv_methods priv_vcl_methods[1] = {{
+		.magic = VMOD_PRIV_METHODS_MAGIC,
+		.type = "vmod_xcounter_priv_vcl",
+		.fini = free_func
+}};
+#endif
 
 int v_matchproto_(vmod_event_f)
 #if VRT_MAJOR_VERSION > 8U
@@ -161,7 +168,11 @@ int v_matchproto_(vmod_event_f)
 			ALLOC_OBJ(dsh, VSC_XCNT_SEG_HEAD_MAGIC);
 			dsh->t_start = VTIM_real();
 			priv->priv = dsh;
+#if VRT_MAJOR_VERSION >= 13U
+			priv->methods = priv_vcl_methods;
+#else
 			priv->free = free_func;
+#endif
 		}
 		break;
 	case VCL_EVENT_WARM:
