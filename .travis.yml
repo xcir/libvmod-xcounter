@@ -32,11 +32,11 @@ script:
 env:
   matrix:
     - VARSNIH_TGZ=https://github.com/varnishcache/varnish-cache/archive/master.tar.gz
-    - VARSNIH_TGZ=https://varnish-cache.org/_downloads/varnish-6.5.0.tgz
-    - VARSNIH_TGZ=https://varnish-cache.org/_downloads/varnish-6.4.0.tgz
-    - VARSNIH_TGZ=https://varnish-cache.org/_downloads/varnish-6.3.0.tgz
-    - VARSNIH_TGZ=https://varnish-cache.org/_downloads/varnish-6.2.1.tgz
-    - VARSNIH_TGZ=https://varnish-cache.org/_downloads/varnish-6.0.4.tgz
+    - VARSNIH_TGZ=https://varnish-cache.org/_downloads/e2a305a110260371a068ba3f22f10233/varnish-6.5.1.tgz
+    - VARSNIH_TGZ=https://varnish-cache.org/_downloads/df42864b916648ea4e11fde2e203b99a/varnish-6.4.0.tgz
+    - VARSNIH_TGZ=https://varnish-cache.org/_downloads/bc70cbaf21bbcd7afbf2281f6da27355/varnish-6.3.2.tgz
+    - VARSNIH_TGZ=https://varnish-cache.org/_downloads/19761a51f808f74c4a6a1558d72e37f2/varnish-6.2.3.tgz
+    - VARSNIH_TGZ=https://varnish-cache.org/_downloads/41841608341add28256b374dc367af04/varnish-6.0.7.tgz
 
 compiler:
   - clang
