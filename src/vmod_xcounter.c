@@ -129,11 +129,16 @@ VSC_xcnt_Destroy(struct vsc_seg **sg)
 	VRT_VSC_Destroy(vsc_xcnt_name, p);
 }
 
-
 static void
+#if VRT_MAJOR_VERSION >= 13U
 free_func(VRT_CTX, void *p)
 {
 	(void) ctx;
+#else
+free_func(void *p)
+{
+#endif
+
 	struct vsc_xcnt_seg_head *dsh;
 	struct vsc_xcnt_seg  *ds;
 	struct vsc_xcnt_seg  *ds2;
