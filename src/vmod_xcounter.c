@@ -131,8 +131,9 @@ VSC_xcnt_Destroy(struct vsc_seg **sg)
 
 
 static void
-free_func(void *p)
+free_func(VRT_CTX, void *p)
 {
+	(void) ctx;
 	struct vsc_xcnt_seg_head *dsh;
 	struct vsc_xcnt_seg  *ds;
 	struct vsc_xcnt_seg  *ds2;
