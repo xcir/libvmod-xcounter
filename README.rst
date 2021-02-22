@@ -1,4 +1,5 @@
-[![CI](https://github.com/xcir/libvmod-xcounter/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/xcir/libvmod-xcounter/actions/workflows/test.yml)
+.. image:: https://github.com/xcir/libvmod-xcounter/actions/workflows/test.yml/badge.svg?branch=master
+    :target: https://github.com/xcir/libvmod-xcounter/actions/workflows/test.yml
 
 ============
 vmod-xcounter
