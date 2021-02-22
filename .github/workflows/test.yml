@@ -14,13 +14,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        varnish:
+          - https://github.com/varnishcache/varnish-cache/archive/master.tar.gz
+          - https://varnish-cache.org/_downloads/varnish-6.5.1.tgz
     steps:
     - uses: actions/checkout@v2
     - name: install build depends
       run: sudo apt-get install python3-docutils python3-sphinx
     - name: build varnish
       run: |
-       wget https://github.com/varnishcache/varnish-cache/archive/master.tar.gz
+       wget ${{ matrix.varnish }}
        tar -zxf *gz
        pushd varnish-*/
        ./autogen.sh
