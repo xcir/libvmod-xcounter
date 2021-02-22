@@ -24,7 +24,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - name: Checkout source code
+        uses: actions/checkout@v2
       - name: set env
         env:
           VARSNIH_TGZ: ${{ matrix.varnish }}
@@ -42,6 +43,7 @@ jobs:
          popd
       - name: build vmod
         run: |
+         cd $GITHUB_WORKSPACE
          ./autogen.sh
          ./configure --prefix=/usr
          make -j4
