@@ -23,29 +23,27 @@ jobs:
           - https://varnish-cache.org/_downloads/varnish-6.5.1.tgz
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout source code
-        uses: actions/checkout@v2
-      - name: set env
-        env:
-          VARSNIH_TGZ: ${{ matrix.varnish }}
-      - name: install build depends
-        run: sudo apt-get install python3-docutils python3-sphinx
-      - name: build varnish
-        run: |
-         wget $VARNISH_TGZ
-         tar -zxf *gz
-         pushd varnish-*/
-         ./autogen.sh
-         ./configure --prefix=/usr
-         make -sj32
-         sudo make install
-         popd
-      - name: build vmod
-        run: |
-         cd $GITHUB_WORKSPACE
-         ./autogen.sh
-         ./configure --prefix=/usr
-         make -j4
-         make check -j4
+    - name: set env
+      env:
+        VARSNIH_TGZ: ${{ matrix.varnish }}
+    - uses: actions/checkout@v2
+    - name: install build depends
+      run: sudo apt-get install python3-docutils python3-sphinx
+    - name: build varnish
+      run: |
+       wget $VARNISH_TGZ
+       tar -zxf *gz
+       pushd varnish-*/
+       ./autogen.sh
+       ./configure --prefix=/usr
+       make -sj32
+       sudo make install
+       popd
+    - name: build vmod
+      run: |
+       cd $GITHUB_WORKSPACE
+       ./autogen.sh
+       ./configure --prefix=/usr
+       make -j4
+       make check -j4
         
