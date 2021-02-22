@@ -15,6 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         varnish:
           - https://github.com/varnishcache/varnish-cache/archive/master.tar.gz
@@ -23,6 +24,9 @@ jobs:
           - https://varnish-cache.org/_downloads/varnish-6.3.2.tgz
           - https://varnish-cache.org/_downloads/varnish-6.2.3.tgz
           - https://varnish-cache.org/_downloads/varnish-6.0.7.tgz
+        include:
+          - varnish: https://github.com/varnishcache/varnish-cache/archive/master.tar.gz
+            allow_failures: "true"
     steps:
     - uses: actions/checkout@v2
     - name: install build depends
@@ -37,6 +41,7 @@ jobs:
        make -sj32
        sudo make install
        popd
+      continue-on-error: ${{ matrix.allow_failures == 'true' }}
     - name: build vmod
       run: |
        cd $GITHUB_WORKSPACE
@@ -44,4 +49,4 @@ jobs:
        ./configure --prefix=/usr
        make -j4
        make check -j4
-        
+      continue-on-error: ${{ matrix.allow_failures == 'true' }}
