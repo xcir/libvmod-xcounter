@@ -21,19 +21,17 @@ jobs:
         varnish: 
           - https://github.com/varnishcache/varnish-cache/archive/master.tar.gz
           - https://varnish-cache.org/_downloads/varnish-6.5.1.tgz
-
-# The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - name: Run CMake
+      - name: set env
         env:
           VARSNIH_TGZ: ${{ matrix.varnish }}
-      - run: sudo apt-get install python3-docutils python3-sphinx
-      - run: |
+      - name: install build depends
+        run: sudo apt-get install python3-docutils python3-sphinx
+      - name: build varnish
+        run: |
          wget $VARNISH_TGZ
          tar -zxf *gz
          pushd varnish-*/
@@ -42,7 +40,8 @@ jobs:
          make -sj32
          sudo make install
          popd
-      - run: |
+      - name: build vmod
+        run: |
          ./autogen.sh
          ./configure --prefix=/usr
          make -j4
