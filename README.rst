@@ -1,5 +1,4 @@
-.. image:: https://travis-ci.org/xcir/libvmod-xcounter.svg?branch=master
-    :target: https://travis-ci.org/xcir/libvmod-xcounter
+[![CI](https://github.com/xcir/libvmod-xcounter/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/xcir/libvmod-xcounter/actions/workflows/test.yml)
 
 ============
 vmod-xcounter
