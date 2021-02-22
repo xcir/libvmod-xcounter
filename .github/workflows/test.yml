@@ -4,34 +4,23 @@ name: CI
 
 # Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [ $default-branch ]
   pull_request:
-    branches: [ master ]
+    branches: [ $default-branch ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    strategy:
-      matrix:
-        varnish: 
-          - https://github.com/varnishcache/varnish-cache/archive/master.tar.gz
-          - https://varnish-cache.org/_downloads/varnish-6.5.1.tgz
     runs-on: ubuntu-latest
     steps:
-    - name: set env
-      env:
-        VARSNIH_TGZ: ${{ matrix.varnish }}
     - uses: actions/checkout@v2
     - name: install build depends
       run: sudo apt-get install python3-docutils python3-sphinx
     - name: build varnish
       run: |
-       wget $VARNISH_TGZ
+       wget https://github.com/varnishcache/varnish-cache/archive/master.tar.gz
        tar -zxf *gz
        pushd varnish-*/
        ./autogen.sh
