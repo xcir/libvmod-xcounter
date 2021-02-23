@@ -1,0 +1,14 @@
+Source: libvmod-xcounter
+Section: web
+Priority: optional
+Maintainer: Shohei Tanaka(@xcir) <kokoniimasu@gmail.com>
+Build-Depends: debhelper (>=9), python-docutils, dh-autoreconf, pkg-config, autogen, automake, autotools-dev, autoconf, libtool, varnish-dev
+Standards-Version: 3.9.6
+Homepage: https://github.com/xcir/libvmod-xcounter
+
+Package: libvmod-xcounter
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, varnish
+Replaces: libvmod-xcounter (<< 999)
+Description: XCounter for Varnish
+ Custom Counter

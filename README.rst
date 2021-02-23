@@ -10,10 +10,10 @@ Custom Counter
 ------------------------------------
 
 :Author: Shohei Tanaka(@xcir)
-:Date: 2019-03-20
-:Version: 62.3
-:Support Varnish Version: 6.0.x 6.1.x 6.2.x 6.3.x 6.4.x
-:Check Varnish Version: see .travis.yml
+:Date: 2021-02-23
+:Version: 65.1
+:Support Varnish Version: 6.0.x 6.1.x 6.2.x 6.3.x 6.4.x 6.5.x
+:Check Varnish Version: see .github/test.yml
 :Manual section: 3
 
 SYNOPSIS
@@ -21,11 +21,30 @@ SYNOPSIS
 
 import xcounter;
 
-Versioning
-============
+Versioning(Source)
+====================
 [varnish-version].[library-version]
 
-61.1 is v1 for Varnish6.1.x
+65.1 is v1 for Varnish6.5.x
+
+Versioning(Package)
+====================
+[VRT-version].[Source-version]
+
+120.65.1 is 65.1 for VRT12.0
+
+============ ===============
+VRT Version  Varnish Version 
+------------ ---------------
+13.0         Next
+12.0         6.5.x
+11.0         6.4.x
+10.0         6.3.x
+9.0          6.2.x
+8.0          6.1.x
+7.1          6.0.4~6.0.x
+7.0          6.0.0~6.0.3
+============ ===============
 
 DESCRIPTION
 ===========
@@ -186,7 +205,7 @@ Provided by GetPageSpeed
 
 More on the VMODs repository `here <https://www.getpagespeed.com/redhat>`_.
 
-Compilation
+Source build
 ---------------------
 
 For other platforms you would use compilation.
@@ -229,6 +248,18 @@ pkg-config. You can build the module simply by running::
 
  ./configure
  make
+
+Package build
+---------------------
+
+
+This function is beta.
+
+Usage::
+
+  ./sw_vrt.sh [VRT version]
+  debuild -us -uc
+
 
 Installation directories
 ------------------------
