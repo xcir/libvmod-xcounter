@@ -1,4 +1,4 @@
-# libvmod-xcounter 65.1 (2021-02-23)
+# libvmod-xcounter 65.4 (2021-02-23)
 
 * Support Varnish6.5.x(VRT=12) and VRT=13
 * Beta Add deb build files.
