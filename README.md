@@ -7,8 +7,8 @@
 |                        | |
 |------------------------|-|
 |Author                  | Shohei Tanaka(@xcir) |
-|Date                    | ---- |
-|Version                 |  trunk |
+|Date                    | 2021-02-23 |
+|Version                 |  65.1 |
 |Support Varnish Version | 6.0.x 6.1.x 6.2.x 6.3.x 6.4.x 6.5.x |
 |Check Varnish Version   | see .github/test.yml |
 |Manual section          | 3 |
