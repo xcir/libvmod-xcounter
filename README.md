@@ -204,6 +204,8 @@ More on the VMODs repository `here <https://www.getpagespeed.com/redhat>`_.
 
 ## Package build for deb
 
+This function is beta.
+
 ```
 ./sw_vrt.sh [VRT version]
 debuild -us -uc
