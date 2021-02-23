@@ -9,7 +9,7 @@
 |Author                  | Shohei Tanaka(@xcir) |
 |Date                    | 2021-02-23 |
 |Version                 |  65.1 |
-|Support Varnish Version | 6.0.x 6.1.x 6.2.x 6.3.x 6.4.x |
+|Support Varnish Version | 6.0.x 6.1.x 6.2.x 6.3.x 6.4.x 6.5.x |
 |Check Varnish Version   | see .github/test.yml |
 |Manual section          | 3 |
 
@@ -27,7 +27,7 @@ import xcounter;
 ### Package
 [VRT-version].[Source-version]
 
-120.65.1 is 65.1 for VRT12
+120.65.1 is 65.1 for VRT12.0
 
 | VRT Version | Varnish Version |
 |:------------|:-|
