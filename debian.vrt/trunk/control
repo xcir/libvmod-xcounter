@@ -9,6 +9,6 @@ Homepage: https://github.com/xcir/libvmod-xcounter
 Package: libvmod-xcounter
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, varnish
-Replaces: libvmod-xcount (<< 999)
+Replaces: libvmod-xcounter (<< 999)
 Description: XCounter for Varnish
  Custom Counter
