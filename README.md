@@ -7,8 +7,8 @@
 |                        | |
 |------------------------|-|
 |Author                  | Shohei Tanaka(@xcir) |
-|Date                    | 2021-02-23 |
-|Version                 |  65.1 |
+|Date                    | ---- |
+|Version                 |  trunk |
 |Support Varnish Version | 6.0.x 6.1.x 6.2.x 6.3.x 6.4.x 6.5.x |
 |Check Varnish Version   | see .github/test.yml |
 |Manual section          | 3 |
@@ -190,8 +190,7 @@ if(xcnt.get() > 1024){...}
 
 ## INSTALLATION
 
-Binaries for Varnish 6.0 LTS (CentOS / RedHat 7)
--------------------------------------------------
+### Binaries for Varnish 6.0 LTS (CentOS / RedHat 7)
 
 Provided by GetPageSpeed
 
@@ -203,7 +202,14 @@ Provided by GetPageSpeed
 
 More on the VMODs repository `here <https://www.getpagespeed.com/redhat>`_.
 
-## Compilation
+## Package build for deb
+
+```
+./sw_vrt.sh [VRT version]
+debuild -us -uc
+```
+
+## Source build
 
 For other platforms you would use compilation.
 
