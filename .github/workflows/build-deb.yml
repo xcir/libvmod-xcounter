@@ -32,7 +32,7 @@ jobs:
     - name: build vmod
       run: |
        cd $GITHUB_WORKSPACE
-       rm ../*.deb
+       rm -f ../*.deb
        debuild -us -uc -b
        ls ../
     - name: Get filename
