@@ -33,6 +33,6 @@ jobs:
       run: |
        cd $GITHUB_WORKSPACE
        debclean
-       debuild -us -uc
+       yes | debuild -us -uc
        ls ../
 
