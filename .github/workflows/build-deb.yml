@@ -11,6 +11,7 @@ jobs:
     runs-on: "ubuntu-20.04"
     outputs:
       upload_url: ${{steps.create_release.outputs.upload_url}}
+    steps:
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
