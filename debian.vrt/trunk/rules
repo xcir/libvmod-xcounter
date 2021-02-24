@@ -18,6 +18,7 @@
 	dh $@ --without autoreconf
 
 override_dh_auto_configure:
+	./autogen.sh
 	./configure
 
 # dh_make generated override targets

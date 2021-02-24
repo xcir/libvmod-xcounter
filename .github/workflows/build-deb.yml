@@ -26,7 +26,9 @@ jobs:
       run: |
        cd $GITHUB_WORKSPACE
        ./sw_vrt.sh ${{ matrix.vrt }}
-       debian.vrt/bf_build_${{ matrix.vrt }}.sh
+       cd debian.vrt
+       ./pkg.sh
+       ./bf_build_${{ matrix.vrt }}.sh
     - name: build vmod
       run: |
        cd $GITHUB_WORKSPACE
