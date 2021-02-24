@@ -32,6 +32,32 @@ jobs:
     - name: build vmod
       run: |
        cd $GITHUB_WORKSPACE
+       rm ../*.deb
        debuild -us -uc -b
        ls ../
-
+    - name: Get filename
+      id: filename
+      run: |
+       cd $GITHUB_WORKSPACE
+       cd ..
+       echo -n "::set-output name=deb::";ls *.deb
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: true
+        prerelease: true
+    - name: Upload Release Asset
+      id: upload-release-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ../${{ steps.filename.deb }}
+        asset_name: ${{ steps.filename.deb }}
+        asset_content_type: application/vnd.debian.binary-package
