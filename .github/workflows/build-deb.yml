@@ -37,7 +37,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: install build depends
-      run: sudo apt-get install python3-docutils python3-sphinx build-essential devscripts debhelper python-docutils dh-autoreconf pkg-config autogen automake autotools-dev autoconf libtool
+      run: |
+       sudo apt-get remove --purge varnish varnish-dev || echo
+       sudo apt-get install python3-docutils python3-sphinx build-essential devscripts debhelper python-docutils dh-autoreconf pkg-config autogen automake autotools-dev autoconf libtool
     - name: install varnish
       run: |
        cd $GITHUB_WORKSPACE
