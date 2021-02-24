@@ -7,7 +7,22 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 jobs:
+  release:
+    runs-on "ubuntu-20.04"
+    outputs:
+      upload_url: ${{steps.create_release.outputs.upload_url}}
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: true
+        prerelease: true
   build:
+    needs: release
     strategy:
       fail-fast: false
       matrix:
@@ -37,27 +52,15 @@ jobs:
        ls ../
     - name: Get filename
       id: filename
-      run: |
-       cd $GITHUB_WORKSPACE
-       cd ..
-       echo "::set-output name=deb::`ls *.deb`"
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: true
-        prerelease: true
+      run: find ${GITHUB_WORKSPACE}/../ -maxdepth 1 -name *.deb  -type f  -printf "::set-output name=deb::%f\n"
+
     - name: Upload Release Asset
       id: upload-release-asset
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ../${{ steps.filename.deb }}
-        asset_name: ${{ steps.filename.deb }}
+        upload_url: ${{ needs.release.outputs.upload_url }}
+        asset_path: ../${{ steps.filename.outputs.deb }}
+        asset_name: ${{ steps.filename.outputs.deb }}
         asset_content_type: application/vnd.debian.binary-package
