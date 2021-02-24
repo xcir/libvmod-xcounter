@@ -1,0 +1,47 @@
+varnishtest "Test xcounter vmod"
+
+server s1 {
+       rxreq
+       txresp
+} -start
+
+varnish v1 -vcl+backend {
+	import xcounter;
+
+	sub vcl_init {
+		new xc = xcounter.vsc();
+		new xc2 = xcounter.vsc(hidevclname=1, groupname="foo.", oneliner="hello");
+		new x1 = xcounter.vsc(format=bitmap, type=bitmap, level=debug);
+		new x2 = xcounter.vsc(format=bytes,  type=gauge , level=diag);
+		new x3 = xcounter.vsc(format=duration);
+
+
+	}
+
+	sub vcl_deliver {
+		xc.set(10);
+		xc.incr(1);//11
+		xc.decr(2);//9
+		set resp.http.xc = xc.get();
+		set resp.http.el = xcounter.elapsed();
+	}
+
+} -start
+
+client c1 {
+	txreq -url "/"
+	rxresp
+	expect resp.http.xc  ==  "9"
+	expect resp.http.el  != <undef>
+}
+
+client c1 -run
+varnish v1 -expect XCNT.vcl1.xc.val == 9
+varnish v1 -expect XCNT.foo.xc2.val == 0
+varnish v1 -expect XCNT.vcl1.x1.val == 0
+varnish v1 -expect XCNT.vcl1.x2.val == 0
+varnish v1 -expect XCNT.vcl1.x3.val == 0
+
+shell "varnishstat -1 -n ${v1_name}|grep XCNT.foo.xc2|grep hello"
+
+#shell "varnishstat -1 -n ${v1_name} > /tmp/test-xcounter"

@@ -55,6 +55,12 @@ jobs:
     - name: Get filename
       id: filename
       run: find ${GITHUB_WORKSPACE}/../ -maxdepth 1 -name *.deb  -type f  -printf "::set-output name=deb::%f\n"
+    - name: Test pkg
+      run: |
+       cd ${GITHUB_WORKSPACE}/../
+       sudo dpkg -i ${{ steps.filename.outputs.deb }}
+       cd ${GITHUB_WORKSPACE}/debian.vrt
+       varnishtest test.vtc
 
     - name: Upload Release Asset
       id: upload-release-asset
