@@ -32,7 +32,6 @@ jobs:
     - name: build vmod
       run: |
        cd $GITHUB_WORKSPACE
-       rm -f ../libvmod-*
        debuild -us -uc -b
        ls ../
 
