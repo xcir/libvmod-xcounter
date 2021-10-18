@@ -1,3 +1,7 @@
+# libvmod-xcounter 70.4 (2021-10-18)
+* No code change
+* Support Varnish7.0.x(VRT=14)
+
 # libvmod-xcounter 65.4 (2021-02-23)
 
 * Support Varnish6.5.x(VRT=12) and VRT=13

@@ -1,5 +1,5 @@
-libvmod-xcounter (%VRT%.65.4%CN%) focal; urgency=medium
+libvmod-xcounter (%VRT%.70.4%CN%) focal; urgency=medium
 
-  * Support Varnish6.5.x(VRT=12) and VRT=13
+  * Support Varnish7.0.x(VRT=14)
 
  -- Shohei Tanaka(@xcir) <kokoniimasu@gmail.com>  Tue, 23 Feb 2021 12:21:02 +0000
