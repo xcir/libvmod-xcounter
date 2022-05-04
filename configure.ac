@@ -1,10 +1,10 @@
-AC_PREREQ([2.68])
-AC_INIT([libvmod-xcounter], [0.1], [], [vmod-xcounter])
+AC_PREREQ([2.69])
+AC_INIT([libvmod-xcounter],[0.1],[],[vmod-xcounter])
 AC_COPYRIGHT([Copyright (c) 2018 Shohei Tanaka(@xcir)])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR(src/vmod_xcounter.vcc)
-AC_CONFIG_HEADER([config.h])
+AC_CONFIG_HEADERS([config.h])
 
 AM_INIT_AUTOMAKE([1.12 -Wall -Werror foreign parallel-tests])
 AM_SILENT_RULES([yes])
