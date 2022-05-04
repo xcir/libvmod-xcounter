@@ -206,6 +206,7 @@ Provided by GetPageSpeed
 
 More on the VMODs repository `here <https://www.getpagespeed.com/redhat>`_.
 
+
 Source build
 ---------------------
 
@@ -253,7 +254,6 @@ pkg-config. You can build the module simply by running::
 Package build
 ---------------------
 
-
 This function is beta.
 
 Usage::
@@ -272,6 +272,10 @@ overridden by passing the ``vmoddir`` variable to ``make install``.
 
 COMMON PROBLEMS
 ===============
+
+* autogen.sh: error: possibly undefined macro: AC_MSG_ERROR
+
+  Install ``autoconf-archive``
 
 * configure: error: Need varnish.m4 -- see README.rst
 
