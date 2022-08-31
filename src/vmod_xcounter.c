@@ -140,13 +140,11 @@ free_func(void *p)
 #endif
 
 	struct vsc_xcnt_seg_head *dsh;
-	struct vsc_xcnt_seg  *ds;
-	struct vsc_xcnt_seg  *ds2;
+	struct vsc_xcnt_seg  *ds, *ds2;
 	CAST_OBJ_NOTNULL(dsh, p, VSC_XCNT_SEG_HEAD_MAGIC);
-	VTAILQ_FOREACH(ds, &dsh->vsc_segs, list) {
-		ds2 = ds;
+	VTAILQ_FOREACH_SAFE(ds, &dsh->vsc_segs, list, ds2) {
 		VTAILQ_REMOVE(&dsh->vsc_segs, ds, list);
-		FREE_OBJ(ds2);
+		FREE_OBJ(ds);
 	}
 	FREE_OBJ(dsh);
 }
