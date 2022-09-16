@@ -10,9 +10,9 @@ Custom Counter
 ------------------------------------
 
 :Author: Shohei Tanaka(@xcir)
-:Date: 2021-10-18
-:Version: 70.4
-:Support Varnish Version: 6.0.x 6.1.x 6.2.x 6.3.x 6.4.x 6.5.x 6.6.x 7.0.x
+:Date: 2022-09-16
+:Version: 72.5
+:Support Varnish Version: 6.0.x~
 :Check Varnish Version: see .github/workflows/test.yml
 :Manual section: 3
 
@@ -36,6 +36,8 @@ Versioning(Package)
 ============ ===============
 VRT Version  Varnish Version 
 ------------ ---------------
+16.0         7.2.x
+15.0         7.1.x
 14.0         7.0.x
 13.0         6.6.x
 12.0         6.5.x
