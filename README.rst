@@ -263,6 +263,76 @@ Usage::
   ./sw_vrt.sh [VRT version]
   debuild -us -uc
 
+Package build(using vmod-packager)
+-----------------------------------
+
+vmod-packager allows you to create VMODs with various distribution and Varnish version combinations.
+
+`here <https://github.com/xcir/vmod-packager>`
+
+
+Sample::
+
+  xcir@build01:~/git/tmp$ git clone git@github.com:xcir/vmod-packager.git
+  xcir@build01:~/git/tmp$ cd vmod-packager/src/
+  xcir@build01:~/git/tmp/vmod-packager/src$ git clone git@github.com:xcir/libvmod-xcounter.git
+  xcir@build01:~/git/tmp/vmod-packager/src$ cd ..
+  ## RPM sample
+  xcir@build01:~/git/tmp/vmod-packager$ ./vmod-packager.sh  -d centos_stream9 src/libvmod-xcounter/
+  Sending build context to Docker daemon  644.6kB
+  Step 1/6 : FROM quay.io/centos/centos:stream9
+  ...
+  ##################################################
+          docker image: vmod-packager/centos_stream9:7.2.0-1
+                  Dist: centos_stream9
+      Varnish Version: 7.2.0
+          Varnish VRT: 160
+            VMOD name: libvmod-xcounter
+          VMOD Version: 160.72.5
+                Status: SUCCESS
+  ##################################################
+  VMOD output:
+  pkgs/rpms/libvmod-xcounter/libvmod-xcounter-160.72.5-1.el9.x86_64.rpm
+  pkgs/rpms/libvmod-xcounter/libvmod-xcounter-160.72.5-1.el9.src.rpm
+  
+  ## DEB sample
+  xcir@build01:~/git/tmp/vmod-packager$ ./vmod-packager.sh -v 7.1.0 -d jammy src/libvmod-xcounter/
+  Sending build context to Docker daemon    831kB
+  Step 1/4 : FROM ubuntu:jammy
+  ...
+  ##################################################
+          docker image: vmod-packager/jammy:7.1.0-1
+                  Dist: jammy
+      Varnish Version: 7.1.0
+          Varnish VRT: 150
+            VMOD name: libvmod-xcounter
+          VMOD Version: 150.72.5
+                Status: SUCCESS
+  ##################################################
+  VMOD output:
+  pkgs/debs/libvmod-xcounter/libvmod-xcounter-dbgsym_150.72.5~jammy-1_amd64.ddeb
+  pkgs/debs/libvmod-xcounter/libvmod-xcounter_150.72.5~jammy-1_amd64.build
+  pkgs/debs/libvmod-xcounter/libvmod-xcounter_150.72.5~jammy-1_amd64.buildinfo
+  pkgs/debs/libvmod-xcounter/libvmod-xcounter_150.72.5~jammy-1_amd64.changes
+  pkgs/debs/libvmod-xcounter/libvmod-xcounter_150.72.5~jammy-1_amd64.deb
+  
+  xcir@build01:~/git/tmp/vmod-packager$ tree pkgs/
+  pkgs/
+  ├── arch
+  ├── debs
+  │   └── libvmod-xcounter
+  │       ├── libvmod-xcounter_150.72.5~jammy-1_amd64.build
+  │       ├── libvmod-xcounter_150.72.5~jammy-1_amd64.buildinfo
+  │       ├── libvmod-xcounter_150.72.5~jammy-1_amd64.changes
+  │       ├── libvmod-xcounter_150.72.5~jammy-1_amd64.deb
+  │       └── libvmod-xcounter-dbgsym_150.72.5~jammy-1_amd64.ddeb
+  └── rpms
+      └── libvmod-xcounter
+          ├── libvmod-xcounter-160.72.5-1.el9.src.rpm
+          └── libvmod-xcounter-160.72.5-1.el9.x86_64.rpm
+  
+  5 directories, 7 files
+
 
 Installation directories
 ------------------------
