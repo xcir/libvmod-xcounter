@@ -1,5 +1,6 @@
-libvmod-xcounter (71.70.4) focal; urgency=medium
+libvmod-xcounter (71.72.5) focal; urgency=medium
 
-  * Support Varnish7.0.x(VRT=14)
+  * Fix a use-after-free(#13 Thx nigoroll)
+  * Support Varnish7.2.x(VRT=16) and VRT=15
 
- -- Shohei Tanaka(@xcir) <kokoniimasu@gmail.com>  Tue, 23 Feb 2021 12:21:02 +0000
+ -- Shohei Tanaka(@xcir) <kokoniimasu@gmail.com>  Fri, 16 Sep 2022 01:31:02 +0000

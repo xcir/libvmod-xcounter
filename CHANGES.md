@@ -1,3 +1,7 @@
+# libvmod-xcounter 72.5 (2022-09-16)
+* Fix a use-after-free(#13 Thx nigoroll)
+* Support Varnish7.2.x(VRT=16) and VRT=15
+
 # libvmod-xcounter 70.4 (2021-10-18)
 * No code change
 * Support Varnish7.0.x(VRT=14)
