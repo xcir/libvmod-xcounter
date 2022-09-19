@@ -268,7 +268,7 @@ Package build(using vmod-packager)
 
 vmod-packager allows you to create VMODs with various distribution and Varnish version combinations.
 
-`here <https://github.com/xcir/vmod-packager>`
+`here <https://github.com/xcir/vmod-packager>`_
 
 
 Sample::
