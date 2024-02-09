@@ -131,7 +131,7 @@ VSC_xcnt_Destroy(struct vsc_seg **sg)
 }
 
 static void
-#if VRT_MAJOR_VERSION >= 13U
+#if VRT_MAJOR_VERSION >= 13U && VRT_MAJOR_VERSION < 6000U
 free_func(VRT_CTX, void *p)
 {
 	(void) ctx;
@@ -150,7 +150,7 @@ free_func(void *p)
 	FREE_OBJ(dsh);
 }
 
-#if VRT_MAJOR_VERSION >= 13U
+#if VRT_MAJOR_VERSION >= 13U && VRT_MAJOR_VERSION < 6000U
 static const struct vmod_priv_methods priv_vcl_methods[1] = {{
 		.magic = VMOD_PRIV_METHODS_MAGIC,
 		.type = "vmod_xcounter_priv_vcl",
@@ -159,7 +159,7 @@ static const struct vmod_priv_methods priv_vcl_methods[1] = {{
 #endif
 
 int v_matchproto_(vmod_event_f)
-#if VRT_MAJOR_VERSION > 8U
+#if VRT_MAJOR_VERSION > 8U && VRT_MAJOR_VERSION < 6000U
   vmod_event_function(VRT_CTX, struct vmod_priv *priv, enum vcl_event_e e)
 #else
   event_function(VRT_CTX, struct vmod_priv *priv, enum vcl_event_e e)
@@ -173,7 +173,7 @@ int v_matchproto_(vmod_event_f)
 			ALLOC_OBJ(dsh, VSC_XCNT_SEG_HEAD_MAGIC);
 			dsh->t_start = VTIM_real();
 			priv->priv = dsh;
-#if VRT_MAJOR_VERSION >= 13U
+#if VRT_MAJOR_VERSION >= 13U && VRT_MAJOR_VERSION < 6000U
 			priv->methods = priv_vcl_methods;
 #else
 			priv->free = free_func;
