@@ -20,25 +20,26 @@ struct VSC_xcnt {
 
 
 struct vmod_xcounter_vsc {
-	unsigned		magic;
+	unsigned						magic;
 #define VMOD_XCOUNTER_VSC_PARAM_MAGIC		0xaed1b785
-	struct vsc_seg	*vsc_seg;
-	struct VSC_xcnt	*vsc;
-	char            *json;
+	struct vsc_seg					*vsc_seg;
+	struct VSC_xcnt					*vsc;
+	char            				*json;
 	VTAILQ_ENTRY(vmod_xcounter_vsc) list;
 };
 
 struct vsc_xcnt_seg {
-	unsigned		magic;
+	unsigned					magic;
 #define VSC_XCNT_SEG_MAGIC		0xaed1b786
+	VCL_BOOL					hidecold;
 	struct vmod_xcounter_vsc	*vsc_vsc;
-	VTAILQ_ENTRY(vsc_xcnt_seg) list;
+	VTAILQ_ENTRY(vsc_xcnt_seg) 	list;
 };
 
 struct vsc_xcnt_seg_head {
-	unsigned magic;
+	unsigned 					magic;
 #define VSC_XCNT_SEG_HEAD_MAGIC 0xaed1c73f
-	double   t_start;
+	double   					t_start;
 	VTAILQ_HEAD(, vsc_xcnt_seg) vsc_segs;
 };
 
@@ -182,14 +183,14 @@ int v_matchproto_(vmod_event_f)
 	case VCL_EVENT_WARM:
 		CAST_OBJ_NOTNULL(dsh, priv->priv, VSC_XCNT_SEG_HEAD_MAGIC);
 		VTAILQ_FOREACH(ds, &dsh->vsc_segs, list) {
-			VRT_VSC_Reveal(ds->vsc_vsc->vsc_seg);
+			if(ds->hidecold) VRT_VSC_Reveal(ds->vsc_vsc->vsc_seg);
 		}
 		
 		break;
 	case VCL_EVENT_COLD:
 		CAST_OBJ_NOTNULL(dsh, priv->priv, VSC_XCNT_SEG_HEAD_MAGIC);
 		VTAILQ_FOREACH(ds, &dsh->vsc_segs, list) {
-			VRT_VSC_Hide(ds->vsc_vsc->vsc_seg);
+			if(ds->hidecold) VRT_VSC_Hide(ds->vsc_vsc->vsc_seg);
 		}
 		break;
 	case VCL_EVENT_DISCARD:
@@ -227,7 +228,8 @@ vmod_vsc__init(VRT_CTX, struct vmod_xcounter_vsc **xcntvscp,
 	CAST_OBJ_NOTNULL(dsh, priv->priv, VSC_XCNT_SEG_HEAD_MAGIC);
 	ALLOC_OBJ(ds, VSC_XCNT_SEG_MAGIC);
 	ds->vsc_vsc = xcntvsc;
-	if(hidecold) VTAILQ_INSERT_HEAD(&dsh->vsc_segs, ds, list);
+	ds->hidecold= hidecold;
+	VTAILQ_INSERT_HEAD(&dsh->vsc_segs, ds, list);
 
 }
 
