@@ -18,7 +18,8 @@ jobs:
       fail-fast: false
       matrix:
         varnish:
-          - "https://github.com/varnishcache/varnish-cache/archive/master.tar.gz" #VRT=20.0
+          - "https://github.com/varnishcache/varnish-cache/archive/master.tar.gz" #VRT=21.0
+          - "https://varnish-cache.org/_downloads/varnish-7.7.0.tgz" #VRT=21.0
           - "https://varnish-cache.org/_downloads/varnish-7.6.0.tgz" #VRT=20.0
           - "https://varnish-cache.org/_downloads/varnish-7.5.0.tgz" #VRT=19.0
           - "https://varnish-cache.org/_downloads/varnish-7.4.0.tgz" #VRT=18.0
