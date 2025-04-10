@@ -1,9 +1,44 @@
-.. image:: https://github.com/xcir/libvmod-xcounter/actions/workflows/test.yml/badge.svg?branch=master
-    :target: https://github.com/xcir/libvmod-xcounter/actions/workflows/test.yml
+..
+.. NB:  This file is machine generated, DO NOT EDIT!
+..
+.. Edit ./vmod_xcounter.vcc and run make instead
+..
 
-============
+.. role:: ref(emphasis)
+
+=============
+vmod_xcounter
+=============
+
+-------------
+Xcounter VMOD
+-------------
+
+:Manual section: 3
+
+SYNOPSIS
+========
+
+.. parsed-literal::
+
+  import xcounter [as name] [from "path"]
+  
+  DURATION elapsed()
+  
+  new xvsc = xcounter.vsc(ENUM format, ENUM type, ENUM level, STRING oneliner, BOOL hidecold, BOOL hidevclname, STRING groupname)
+  
+      VOID xvsc.incr(INT d, BOOL threadsafe)
+   
+      VOID xvsc.decr(INT d, BOOL threadsafe)
+   
+      VOID xvsc.set(INT)
+   
+      INT xvsc.get()
+   
+
+=============
 vmod-xcounter
-============
+=============
 
 ------------------------------------
 Custom Counter
@@ -52,13 +87,7 @@ VRT Version  Varnish Version
 DESCRIPTION
 ===========
 
-
 vmod_xcounter enables custom counter in Varnish.
-
-``varnishstat -f XCNT.*``
-
-.. image:: ./res/varnishstat.png
-
 
 For example, count to the number of requests per domain.
 
@@ -72,7 +101,7 @@ vcl sample:
   }
 
   sub vcl_recv {
-    if(req.http.host == "example.net"){
+    if(req.http.host ~ "^example\.net$"){
       example_net.incr(1);
     }
   }
@@ -80,117 +109,122 @@ vcl sample:
 varnishstat output
 ::
 
-  $ sudo varnishstat -1 -f "XCNT.*"
+  $ sudo varnishstat -1 -f "XCNT*"
   XCNT.reload_20181118_042545_24957.example_net.val            1          .   xcounter
 
 ATTENTION
-=========
+===========
 
 The counter is linked to the VCL.
 
 Add new entry per new(reload) VCL.
 
-INT elapsed()
---------------------
+.. _xcounter.elapsed():
+
+DURATION elapsed()
+------------------
 
 Description
-      Get elapsed time.
-
+	Get elapsed time.
 Example
+	if(xcnt.elapsed() > 1s){...}
+
+.. _xcounter.vsc():
+
+new xvsc = xcounter.vsc(ENUM format, ENUM type, ENUM level, STRING oneliner, BOOL hidecold, BOOL hidevclname, STRING groupname)
+-------------------------------------------------------------------------------------------------------------------------------
+
 ::
 
-      if(xcounter.elapsed() > 1s){...}
-
-vsc(...)
----------
-::
-
-      new xvsc = vsc(
-         ENUM {bitmap, bytes, duration, integer} format=integer,
-         ENUM {bitmap, counter, gauge} type=counter,
-         ENUM {info, debug, diag} level=info,
-         STRING oneliner="xcounter",
-         BOOL hidecold=1,
-         BOOL hidevclname=0,
-         STRING groupname=""
-      )
+   new xvsc = xcounter.vsc(
+      ENUM {bitmap, bytes, duration, integer} format=integer,
+      ENUM {bitmap, counter, gauge} type=counter,
+      ENUM {info, debug, diag} level=info,
+      STRING oneliner="xcounter",
+      BOOL hidecold=1,
+      BOOL hidevclname=0,
+      STRING groupname=""
+   )
 
 Description
-          Create a counter.
+	Create a counter.
+	
+	Counter name format
+	::
 
-          Counter name format
-          ::
+		XCNT.boot.group.object.val
+		("XCNT.%s.%s%s.val", vclname, groupname, objectname)
 
-            XCNT.boot.group.object.val
-            ("XCNT.%s.%s%s.val", vclname, groupname, objectname)
+	``format``
+	Counter format.
 
-          ``format`` Counter format.
+	``type``
+	Counter type.
 
-          ``type`` Counter type.
+	``level``
+	Counter level.
 
-          ``level`` Counter level.
+	``oneliner``
+	Counter description.
 
-          ``oneliner`` Counter description.
+	``hidecold``
+	Hide counter, if state of vcl becomes cold.
 
-          ``hidecold`` Hide counter, if state of vcl becomes cold.
-
-          ``hidevclname`` Do not include vclname(boot,reload... etc) in counter name, if set to true.
-          
-          ``groupname`` Add group name.
+	``hidevclname``
+	Do not include vclname(boot,reload... etc) in counter name, if set to true.
+	
+	``groupname``
+	Add group name.
 
 Example
-::
-          new xcnt = xcounter.vsc();
+	new xcnt = xcounter.vsc();
+
+.. _xvsc.incr():
 
 VOID xvsc.incr(INT d, BOOL threadsafe=1)
---------------------
+----------------------------------------
 
 Description
-          Increment vlaue.
+	Increment vlaue.
 
-          Negative values are ignored
+	Negative values are ignored
 
 Example
-::
+	xcnt.incr(1);
 
-          xcnt.incr(1);
-
+.. _xvsc.decr():
 
 VOID xvsc.decr(INT d, BOOL threadsafe=1)
--------------------
+----------------------------------------
 
 Description
-          Decrement value.
+	Decrement value.
 
-          Negative values are ignored.
+	Negative values are ignored.
 
 Example
-::
+	xcnt.decr(1);
 
-          xcnt.decr(1);
+.. _xvsc.set():
 
 VOID xvsc.set(INT)
----------------------
+------------------
 
 Description
-      Set value.
+	Set value.
 
 Example
-::
+	xcnt.set(1024);
 
-      xcnt.set(1024);
+.. _xvsc.get():
 
 INT xvsc.get()
---------------------
+--------------
 
 Description
-      Get current value.
-
+	Get current value.
 Example
-::
-
-      if(xcnt.get() > 1024){...}
-
+	if(xcnt.get() > 1024){...}
 
 INSTALLATION
 ============
@@ -223,11 +257,10 @@ the necessary paths.
 
 Usage::
 
- ./autogen.sh
- ./configure
+ ./bootstrap
 
 If you have installed Varnish to a non-standard directory, call
-``autogen.sh`` and ``configure`` with ``PKG_CONFIG_PATH`` pointing to
+``bootstrap`` with ``PKG_CONFIG_PATH`` pointing to
 the appropriate path. For instance, when varnishd configure was called
 with ``--prefix=$PREFIX``, use
 
@@ -244,7 +277,7 @@ Make targets:
 
 * make - builds the vmod.
 * make install - installs your vmod.
-* make check - runs the unit tests in ``src/tests/*.vtc``.
+* make check - runs the unit tests in ``src/vtc/*.vtc``.
 * make distcheck - run check and prepare a tarball of the vmod.
 
 If you build a dist tarball, you don't need any of the autotools or
@@ -363,3 +396,12 @@ COMMON PROBLEMS
 * Require GCC
 
   This vmod using GCC Atomic builtins.
+
+COPYRIGHT
+=========
+
+::
+
+  Copyright Shohei Tanaka(@xcir)  (c) 2018.
+  https://github.com/xcir/libvmod-xcounter/
+ 
