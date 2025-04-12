@@ -47,7 +47,7 @@ jobs:
        wget ${{ matrix.varnish }}
        tar -zxf *gz
        pushd varnish-*/
-       ./bootstrap
+       ./autogen.sh
        ./configure --prefix=/usr
        make -sj32
        sudo make install
