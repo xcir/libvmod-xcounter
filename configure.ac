@@ -31,7 +31,7 @@ m4_ifndef([VARNISH_PREREQ], AC_MSG_ERROR([Need varnish.m4 -- see README.rst]))
 VARNISH_PREREQ([6.0])
 VARNISH_VMODS([xcounter])
 
-VMOD_TESTS="$(cd $srcdir/src && echo tests/*.vtc)"
+VMOD_TESTS="$(cd $srcdir/src && echo vtc/*.vtc)"
 AC_SUBST(VMOD_TESTS)
 
 PKG_CHECK_VAR([LIBVARNISHAPI_LIBDIR], [varnishapi], [libdir])
