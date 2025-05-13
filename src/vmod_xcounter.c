@@ -113,8 +113,14 @@ VSC_xcnt_New(struct vmod_xcounter_vsc *xcntvsc,  const char *format, const char*
 	AN(xcntvsc->json);
 	snprintf(xcntvsc->json, t, vsc_xcnt_json_fmt, format, oneliner, type, level);
 	va_start(ap, fmt);
+#if HAVE_DECL_VRT_VSC_ALLOCV==1
+	xcntvsc->vsc = VRT_VSC_Allocv(NULL, &xcntvsc->vsc_seg, vsc_xcnt_name, VSC_xcnt_size,
+		(const unsigned char*)xcntvsc->json, t, fmt, ap);
+#else
 	xcntvsc->vsc = VRT_VSC_Alloc(NULL, &xcntvsc->vsc_seg, vsc_xcnt_name, VSC_xcnt_size,
 		(const unsigned char*)xcntvsc->json, t, fmt, ap);
+#endif
+
 	va_end(ap);
 
 }

@@ -38,6 +38,17 @@ PKG_CHECK_VAR([LIBVARNISHAPI_LIBDIR], [varnishapi], [libdir])
 AC_SUBST([VARNISH_LIBRARY_PATH],
 	[$LIBVARNISHAPI_LIBDIR:$LIBVARNISHAPI_LIBDIR/varnish])
 
+
+####################
+#for trunk(VRT_VSC_Allocv)
+PKG_CHECK_VAR([VARNISH_PKGINCLUDEDIR], [varnishapi], [pkgincludedir])
+
+AC_CHECK_DECLS([VRT_VSC_Allocv],[],[],
+       [#include <stdarg.h>]
+       [#include "$VARNISH_PKGINCLUDEDIR/vdef.h"]
+       [#include "$VARNISH_PKGINCLUDEDIR/vrt.h"])
+####################
+
 AC_CONFIG_FILES([
 	Makefile
 	src/Makefile
