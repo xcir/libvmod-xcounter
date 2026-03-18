@@ -1,4 +1,4 @@
-varnishtest "Test xcounter vmod(rush)"
+vtest "Test xcounter vmod(rush)"
 
 barrier b1 cond 9
 
@@ -7,7 +7,7 @@ server s1 -repeat 9 {
        txresp
 } -start
 
-varnish v1 -vcl+backend {
+vinyl v1 -vcl+backend {
 	import ${vmod_xcounter};
 
 	sub vcl_init {
@@ -85,5 +85,5 @@ client c7 -wait
 client c8 -wait
 client c9 -wait
 
-varnish v1 -expect XCNT.vcl1.xc.val == 9
+vinyl v1 -expect XCNT.vcl1.xc.val == 9
 

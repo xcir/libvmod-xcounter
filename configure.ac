@@ -26,27 +26,27 @@ AC_ARG_WITH([rst2man],
 	[RST2MAN="$withval"],
 	[AC_CHECK_PROGS(RST2MAN, [rst2man rst2man.py], [])])
 
-m4_ifndef([VARNISH_PREREQ], AC_MSG_ERROR([Need varnish.m4 -- see README.rst]))
+m4_ifndef([VINYL_PREREQ], AC_MSG_ERROR([Need vinyl.m4 -- see README.rst]))
 
-VARNISH_PREREQ([6.0])
-VARNISH_VMODS([xcounter])
+VINYL_PREREQ([6.0])
+VINYL_VMODS([xcounter])
 
 VMOD_TESTS="$(cd $srcdir/src && echo vtc/*.vtc)"
 AC_SUBST(VMOD_TESTS)
 
-PKG_CHECK_VAR([LIBVARNISHAPI_LIBDIR], [varnishapi], [libdir])
-AC_SUBST([VARNISH_LIBRARY_PATH],
-	[$LIBVARNISHAPI_LIBDIR:$LIBVARNISHAPI_LIBDIR/varnish])
+PKG_CHECK_VAR([LIBVINYLAPI_LIBDIR], [vinylapi], [libdir])
+AC_SUBST([VINYL_LIBRARY_PATH],
+	[$LIBVINYLAPI_LIBDIR:$LIBVINYLAPI_LIBDIR/vinyl])
 
 
 ####################
 #for trunk(VRT_VSC_Allocv)
-PKG_CHECK_VAR([VARNISH_PKGINCLUDEDIR], [varnishapi], [pkgincludedir])
+PKG_CHECK_VAR([VINYL_PKGINCLUDEDIR], [vinylapi], [pkgincludedir])
 
 AC_CHECK_DECLS([VRT_VSC_Allocv],[],[],
        [#include <stdarg.h>]
-       [#include "$VARNISH_PKGINCLUDEDIR/vdef.h"]
-       [#include "$VARNISH_PKGINCLUDEDIR/vrt.h"])
+       [#include "$VINYL_PKGINCLUDEDIR/vdef.h"]
+       [#include "$VINYL_PKGINCLUDEDIR/vrt.h"])
 ####################
 
 AC_CONFIG_FILES([

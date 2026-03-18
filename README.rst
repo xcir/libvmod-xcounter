@@ -45,10 +45,10 @@ Custom Counter
 ------------------------------------
 
 :Author: Shohei Tanaka(@xcir)
-:Date: 2022-09-16
-:Version: 72.5
-:Support Varnish Version: 6.0.x~
-:Check Varnish Version: see .github/workflows/test.yml
+:Date: n/a
+:Version: Trunk
+:Support Vinyl Cache Version: 9.0.x~
+:Check Vinyl Cache Version: see .github/workflows/test.yml
 :Manual section: 3
 
 SYNOPSIS
@@ -58,9 +58,9 @@ import xcounter;
 
 Versioning(Source)
 ====================
-[varnish-version].[library-version]
+[vinyl-version].[library-version]
 
-65.1 is v1 for Varnish6.5.x
+90.1 is v1 for Vinyl Cache9.0.x
 
 Versioning(Package)
 ====================
@@ -69,7 +69,7 @@ Versioning(Package)
 120.65.1 is 65.1 for VRT12.0
 
 ============ ===============
-VRT Version  Varnish Version 
+VRT Version  Vinyl Cache Version 
 ------------ ---------------
 16.0         7.2.x
 15.0         7.1.x
@@ -87,7 +87,7 @@ VRT Version  Varnish Version
 DESCRIPTION
 ===========
 
-vmod_xcounter enables custom counter in Varnish.
+vmod_xcounter enables custom counter in Vinyl Cache.
 
 For example, count to the number of requests per domain.
 
@@ -106,10 +106,10 @@ vcl sample:
     }
   }
 
-varnishstat output
+vinylstat output
 ::
 
-  $ sudo varnishstat -1 -f "XCNT*"
+  $ sudo vinylstat -1 -f "XCNT*"
   XCNT.reload_20181118_042545_24957.example_net.val            1          .   xcounter
 
 ATTENTION
@@ -229,7 +229,7 @@ Example
 INSTALLATION
 ============
 
-Binaries for Varnish 6.0 LTS (CentOS / RedHat 7)
+Binaries for Vinyl Cache 6.0 LTS (CentOS / RedHat 7)
 -------------------------------------------------
 
 Provided by GetPageSpeed
@@ -237,7 +237,7 @@ Provided by GetPageSpeed
 ::
 
     yum -y install https://extras.getpagespeed.com/release-el7-latest.rpm yum-utils
-    yum-config-manager --enable getpagespeed-extras-varnish60
+    yum-config-manager --enable getpagespeed-extras-vinyl60
     yum install vmod-xcounter
 
 More on the VMODs repository `here <https://www.getpagespeed.com/redhat>`_.
@@ -250,18 +250,18 @@ For other platforms you would use compilation.
 
 The source tree is based on autotools to configure the building, and
 does also have the necessary bits in place to do functional unit tests
-using the ``varnishtest`` tool.
+using the ``vtest`` tool.
 
-Building requires the Varnish header files and uses pkg-config to find
+Building requires the Vinyl Cache header files and uses pkg-config to find
 the necessary paths.
 
 Usage::
 
  ./bootstrap
 
-If you have installed Varnish to a non-standard directory, call
+If you have installed Vinyl Cache to a non-standard directory, call
 ``bootstrap`` with ``PKG_CONFIG_PATH`` pointing to
-the appropriate path. For instance, when varnishd configure was called
+the appropriate path. For instance, when vinyld configure was called
 with ``--prefix=$PREFIX``, use
 
 ::
@@ -269,7 +269,7 @@ with ``--prefix=$PREFIX``, use
  export PKG_CONFIG_PATH=${PREFIX}/lib/pkgconfig
  export ACLOCAL_PATH=${PREFIX}/share/aclocal
 
-The module will inherit its prefix from Varnish, unless you specify a
+The module will inherit its prefix from Vinyl Cache, unless you specify a
 different ``--prefix`` when running the ``configure`` script for this
 module.
 
@@ -299,7 +299,7 @@ Usage::
 Package build(using vmod-packager)
 -----------------------------------
 
-vmod-packager allows you to create VMODs with various distribution and Varnish version combinations.
+vmod-packager allows you to create VMODs with various distribution and Vinyl Cache version combinations.
 
 `here <https://github.com/xcir/vmod-packager>`_
 
@@ -318,8 +318,8 @@ Sample::
   ##################################################
           docker image: vmod-packager/centos_stream9:7.2.0-1
                   Dist: centos_stream9
-      Varnish Version: 7.2.0
-          Varnish VRT: 160
+      Vinyl Cache Version: 7.2.0
+          Vinyl Cache VRT: 160
             VMOD name: libvmod-xcounter
           VMOD Version: 160.72.5
                 Status: SUCCESS
@@ -336,8 +336,8 @@ Sample::
   ##################################################
           docker image: vmod-packager/jammy:7.1.0-1
                   Dist: jammy
-      Varnish Version: 7.1.0
-          Varnish VRT: 150
+      Vinyl Cache Version: 7.1.0
+          Vinyl Cache VRT: 150
             VMOD name: libvmod-xcounter
           VMOD Version: 150.72.5
                 Status: SUCCESS
@@ -382,15 +382,15 @@ COMMON PROBLEMS
 
   Install ``autoconf-archive``
 
-* configure: error: Need varnish.m4 -- see README.rst
+* configure: error: Need vinyl.m4 -- see README.rst
 
   Check whether ``PKG_CONFIG_PATH`` and ``ACLOCAL_PATH`` were set correctly
   before calling ``autogen.sh`` and ``configure``
 
-* Incompatibilities with different Varnish Cache versions
+* Incompatibilities with different Vinyl Cache versions
 
-  Make sure you build this vmod against its correspondent Varnish Cache version.
-  For instance, to build against Varnish Cache 4.1, this vmod must be built from
+  Make sure you build this vmod against its correspondent Vinyl Cache version.
+  For instance, to build against Vinyl Cache 4.1, this vmod must be built from
   branch 4.1.
 
 * Require GCC

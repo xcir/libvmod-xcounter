@@ -37,7 +37,7 @@ jobs:
     - name: install build depends
       run: |
        sudo apt-get install python3-docutils python3-sphinx build-essential devscripts debhelper dh-autoreconf pkg-config autogen automake autotools-dev autoconf libtool autoconf-archive
-    - name: install varnish
+    - name: install vinyl
       run: |
        cd $GITHUB_WORKSPACE
        ./sw_vrt.sh ${{ matrix.vrt }}
@@ -58,7 +58,7 @@ jobs:
        cd ${GITHUB_WORKSPACE}/../
        sudo dpkg -i ${{ steps.filename.outputs.deb }}
        cd ${GITHUB_WORKSPACE}/debian.vrt
-       varnishtest test.vtc
+       vtest test.vtc
 
     - name: Upload Release Asset
       id: upload-release-asset

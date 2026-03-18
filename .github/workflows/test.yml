@@ -18,17 +18,19 @@ jobs:
       fail-fast: false
       matrix:
         varnish:
-          - "https://github.com/varnishcache/varnish-cache/archive/master.tar.gz" #VRT=22.0
-          - "https://varnish-cache.org/_downloads/varnish-8.0.0.tgz" #VRT=22.0
-          - "https://varnish-cache.org/_downloads/varnish-7.7.0.tgz" #VRT=21.0
-          - "https://varnish-cache.org/_downloads/varnish-7.6.0.tgz" #VRT=20.0
-          - "https://varnish-cache.org/_downloads/varnish-7.5.0.tgz" #VRT=19.0
-          - "https://varnish-cache.org/_downloads/varnish-7.4.0.tgz" #VRT=18.0
-          - "https://varnish-cache.org/_downloads/varnish-7.3.0.tgz" #VRT=17.0
-          - "https://varnish-cache.org/_downloads/varnish-7.2.0.tgz" #VRT=16.0
-          - "https://varnish-cache.org/_downloads/varnish-7.1.0.tgz" #VRT=15.0
-          - "https://varnish-cache.org/_downloads/varnish-7.0.0.tgz" #VRT=14.0
-          - "https://varnish-cache.org/_downloads/varnish-6.6.1.tgz" #VRT=13.0
+          - "https://code.vinyl-cache.org/vinyl-cache/vinyl-cache/archive/main.tar.gz" #VRT=23.0
+          - "https://vinyl-cache.org/downloads/vinyl-cache-9.0.0.tgz" #VRT=23.0
+          #- "https://varnish-cache.org/_downloads/varnish-8.0.0.tgz" #VRT=22.0
+          #- "https://varnish-cache.org/_downloads/varnish-7.7.0.tgz" #VRT=21.0
+          #- "https://varnish-cache.org/_downloads/varnish-7.6.0.tgz" #VRT=20.0
+          #- "https://varnish-cache.org/_downloads/varnish-7.5.0.tgz" #VRT=19.0
+          #- "https://varnish-cache.org/_downloads/varnish-7.4.0.tgz" #VRT=18.0
+          #- "https://varnish-cache.org/_downloads/varnish-7.3.0.tgz" #VRT=17.0
+          #- "https://varnish-cache.org/_downloads/varnish-7.2.0.tgz" #VRT=16.0
+          #- "https://varnish-cache.org/_downloads/varnish-7.1.0.tgz" #VRT=15.0
+          #- "https://varnish-cache.org/_downloads/varnish-7.0.0.tgz" #VRT=14.0
+          #- "https://varnish-cache.org/_downloads/varnish-6.6.1.tgz" #VRT=13.0
+
           # - "https://varnish-cache.org/_downloads/varnish-6.5.2.tgz" #VRT=12.0
           # - "https://varnish-cache.org/_downloads/varnish-6.4.0.tgz" #VRT=11.0
           # - "https://varnish-cache.org/_downloads/varnish-6.3.2.tgz" #VRT=10.0
@@ -47,7 +49,11 @@ jobs:
       run: |
        wget ${{ matrix.varnish }}
        tar -zxf *gz
-       pushd varnish-*/
+       if [ -d varnish-* ]; then
+         pushd varnish-*/
+       else
+         pushd vinyl-*/
+       fi
        ./autogen.sh
        ./configure --prefix=/usr
        make -sj32
