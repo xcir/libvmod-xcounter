@@ -21,11 +21,11 @@ import xcounter;
 Branch
 =======
 
-This branch is for Varnish6.0.x~6.5.x.
+This branch is for Varnish Cache 6.0.x~6.5.x.
 
-* For `Vinyl Cache9.0.x~ <https://github.com/xcir/libvmod-xcounter/tree/vinyl-main>`_
-* For `Varnish Cache6.6.x~ <https://github.com/xcir/libvmod-xcounter/tree/varnish-main>`_
-* For `Varnish6.0.x~6.5.x <https://github.com/xcir/libvmod-xcounter/tree/varnish60_65>`_
+* For `Vinyl Cache 9.0.x~ <https://github.com/xcir/libvmod-xcounter/tree/vinyl-main>`_
+* For `Varnish Cache 6.6.x~ <https://github.com/xcir/libvmod-xcounter/tree/varnish-main>`_
+* For `Varnish Cache 6.0.x~6.5.x <https://github.com/xcir/libvmod-xcounter/tree/varnish60_65>`_
 
 Versioning(Source)
 ====================
