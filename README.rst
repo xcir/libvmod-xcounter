@@ -56,6 +56,15 @@ SYNOPSIS
 
 import xcounter;
 
+Branch
+=======
+
+This branch is for Vinyl Cache 9.0.x~
+
+* For `Vinyl Cache 9.0.x~ <https://github.com/xcir/libvmod-xcounter/tree/vinyl-main>`_
+* For `Varnish Cache 6.6.x~ <https://github.com/xcir/libvmod-xcounter/tree/varnish-main>`_
+* For `Varnish Cache 6.0.x~6.5.x <https://github.com/xcir/libvmod-xcounter/tree/varnish60_65>`_
+
 Versioning(Source)
 ====================
 [varnish-version].[library-version]
@@ -228,20 +237,6 @@ Example
 
 INSTALLATION
 ============
-
-Binaries for Varnish 6.0 LTS (CentOS / RedHat 7)
--------------------------------------------------
-
-Provided by GetPageSpeed
-
-::
-
-    yum -y install https://extras.getpagespeed.com/release-el7-latest.rpm yum-utils
-    yum-config-manager --enable getpagespeed-extras-varnish60
-    yum install vmod-xcounter
-
-More on the VMODs repository `here <https://www.getpagespeed.com/redhat>`_.
-
 
 Source build
 ---------------------
