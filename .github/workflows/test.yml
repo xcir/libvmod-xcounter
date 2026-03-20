@@ -44,8 +44,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: install build depends
       run: |
-        apt-get install python3-docutils python3-sphinx build-essential devscripts debhelper dh-autoreconf pkg-config autogen automake autotools-dev autoconf libtool autoconf-archive libncurses-dev libedit-dev libpcre2-dev libpcre3-dev libjemalloc-dev libssl-dev python3-pip
-        pip3 install furo --break-system-packages
+        sudo apt-get install python3-docutils python3-sphinx build-essential devscripts debhelper dh-autoreconf pkg-config autogen automake autotools-dev autoconf libtool autoconf-archive libncurses-dev libedit-dev libpcre2-dev libpcre3-dev libjemalloc-dev libssl-dev python3-pip
+        sudo pip3 install furo --break-system-packages
     - name: build varnish
       run: |
        wget ${{ matrix.varnish }}
