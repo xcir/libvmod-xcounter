@@ -18,7 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         varnish:
-          - "https://code.vinyl-cache.org/vinyl-cache/vinyl-cache/archive/main.tar.gz" #VRT=23.0
+          - "trunk" #VRT=23.0
           - "https://vinyl-cache.org/downloads/vinyl-cache-9.0.0.tgz" #VRT=23.0
           #- "https://varnish-cache.org/_downloads/varnish-8.0.0.tgz" #VRT=22.0
           #- "https://varnish-cache.org/_downloads/varnish-7.7.0.tgz" #VRT=21.0
@@ -39,16 +39,20 @@ jobs:
           # - "https://varnish-cache.org/_downloads/varnish-6.0.8.tgz" #VRT=7.1
           # - "https://varnish-cache.org/_downloads/varnish-6.0.3.tgz" #VRT=7.0
         include:
-          - varnish: "https://github.com/varnishcache/varnish-cache/archive/master.tar.gz"
+          - varnish: "trunk"
             allow_failures: "true"
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6
     - name: install build depends
       run: sudo apt-get install python3-docutils python3-sphinx build-essential devscripts debhelper dh-autoreconf pkg-config autogen automake autotools-dev autoconf libtool autoconf-archive libncurses-dev libedit-dev libpcre2-dev libpcre3-dev libjemalloc-dev
     - name: build varnish
       run: |
-       wget ${{ matrix.varnish }}
-       tar -zxf *gz
+       if [ ${{ matrix.varnish }} == 'trunk' ]; then
+        git clone --recurse-submodules https://code.vinyl-cache.org/vinyl-cache/vinyl-cache/ vinyl-trunk
+       else
+         wget ${{ matrix.varnish }}
+         tar -zxf *gz
+       fi
        if [ -d varnish-* ]; then
          pushd varnish-*/
        else
