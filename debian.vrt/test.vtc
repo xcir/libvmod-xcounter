@@ -1,11 +1,11 @@
-varnishtest "Test xcounter vmod"
+vtest "Test xcounter vmod"
 
 server s1 {
        rxreq
        txresp
 } -start
 
-varnish v1 -vcl+backend {
+vcache v1 -vcl+backend {
 	import xcounter;
 
 	sub vcl_init {
@@ -36,11 +36,11 @@ client c1 {
 }
 
 client c1 -run
-varnish v1 -expect XCNT.vcl1.xc.val == 9
-varnish v1 -expect XCNT.foo.xc2.val == 0
-varnish v1 -expect XCNT.vcl1.x1.val == 0
-varnish v1 -expect XCNT.vcl1.x2.val == 0
-varnish v1 -expect XCNT.vcl1.x3.val == 0
+vcache v1 -expect XCNT.vcl1.xc.val == 9
+vcache v1 -expect XCNT.foo.xc2.val == 0
+vcache v1 -expect XCNT.vcl1.x1.val == 0
+vcache v1 -expect XCNT.vcl1.x2.val == 0
+vcache v1 -expect XCNT.vcl1.x3.val == 0
 
 shell "varnishstat -1 -n ${v1_name}|grep XCNT.foo.xc2|grep hello"
 

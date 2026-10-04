@@ -26,27 +26,31 @@ AC_ARG_WITH([rst2man],
 	[RST2MAN="$withval"],
 	[AC_CHECK_PROGS(RST2MAN, [rst2man rst2man.py], [])])
 
-m4_ifndef([VARNISH_PREREQ], AC_MSG_ERROR([Need varnish.m4 -- see README.rst]))
+m4_ifndef([VCACHE_REQUIRE], AC_MSG_ERROR([Need varnish.m4 -- see README.rst]))
 
-VARNISH_PREREQ([6.0])
-VARNISH_VMODS([xcounter])
+VCACHE_REQUIRE(
+	[[vinyl], [9.1.0]],
+	[[varnish], [9.1.0]]
+)
+VCACHE_VMODS([xcounter])
 
 VMOD_TESTS="$(cd $srcdir/src && echo vtc/*.vtc)"
 AC_SUBST(VMOD_TESTS)
 
-PKG_CHECK_VAR([LIBVARNISHAPI_LIBDIR], [varnishapi], [libdir])
-AC_SUBST([VARNISH_LIBRARY_PATH],
-	[$LIBVARNISHAPI_LIBDIR:$LIBVARNISHAPI_LIBDIR/varnish])
+PKG_CHECK_VAR([LIBVCACHEAPI_LIBDIR], [varnishapi], [libdir])
+AC_SUBST([VCACHE_LIBRARY_PATH],
+	[$LIBVCACHEAPI_LIBDIR:$LIBVCACHEAPI_LIBDIR/varnish])
 
 
 ####################
 #for trunk(VRT_VSC_Allocv)
-PKG_CHECK_VAR([VARNISH_PKGINCLUDEDIR], [varnishapi], [pkgincludedir])
-
+save_CFLAGS="$CFLAGS"
+CFLAGS="$VCACHEAPI_CFLAGS"
 AC_CHECK_DECLS([VRT_VSC_Allocv],[],[],
        [#include <stdarg.h>]
-       [#include "$VARNISH_PKGINCLUDEDIR/vdef.h"]
-       [#include "$VARNISH_PKGINCLUDEDIR/vrt.h"])
+       [#include "vdef.h"]
+       [#include "vrt.h"])
+CFLAGS="$save_CFLAGS"
 ####################
 
 AC_CONFIG_FILES([
